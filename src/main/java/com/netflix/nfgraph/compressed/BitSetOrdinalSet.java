@@ -50,8 +50,9 @@ public class BitSetOrdinalSet extends OrdinalSet {
         int offset = value >>> 3;
         int mask = 1 << (value & 0x07);
 
-        if(offset >= reader.length())
+        if(offset >= reader.length()) {
             return false;
+        }
 
         return (reader.getByte(offset) & mask) != 0;
     }
@@ -70,7 +71,7 @@ public class BitSetOrdinalSet extends OrdinalSet {
         return cardinalitySum;
     }
 
-    private static final int BITS_SET_TABLE[] = new int[256];
+    private static final int[] BITS_SET_TABLE = new int[256];
     static {
         for(int i=0;i<256;i++) {
             BITS_SET_TABLE[i] = (i & 1) + BITS_SET_TABLE[i / 2];
