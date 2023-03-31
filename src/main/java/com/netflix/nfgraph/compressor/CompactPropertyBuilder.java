@@ -39,7 +39,7 @@ public class CompactPropertyBuilder {
 	}
 	
 	public void buildProperty(OrdinalSet ordinalSet) {
-		int connectedOrdinals[] = ordinalSet.asArray();
+		int[] connectedOrdinals = ordinalSet.asArray();
 		Arrays.sort(connectedOrdinals);
 		
 		int previousOrdinal = 0;

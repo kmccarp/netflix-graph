@@ -42,18 +42,20 @@ public class NFCompressedGraphIntPointers implements NFCompressedGraphPointers {
      * @return the offset into the {@link NFCompressedGraph}'s byte array for the node identified by the given type and ordinal.
      */
     public long getPointer(String nodeType, int ordinal) {
-        int pointers[] = pointersByOrdinal.get(nodeType);
-        if(pointers == null)
+        int[] pointers = pointersByOrdinal.get(nodeType);
+        if(pointers == null) {
             throw new NFGraphException("Undefined node type: " + nodeType);
+        }
         if(ordinal < pointers.length) {
-            if(pointers[ordinal] == -1)
+            if(pointers[ordinal] == -1) {
                 return -1;
+            }
             return 0xFFFFFFFFL & pointers[ordinal];
         }
         return -1;
     }
 
-    public void addPointers(String nodeType, int pointers[]) {
+    public void addPointers(String nodeType, int[] pointers) {
         pointersByOrdinal.put(nodeType, pointers);
     }
 
@@ -63,7 +65,7 @@ public class NFCompressedGraphIntPointers implements NFCompressedGraphPointers {
 
     @Override
     public Map<String, long[]> asMap() {
-        Map<String, long[]> map = new HashMap<String, long[]>();
+        Map<String, long[]> map = new HashMap<>();
 
         for(Map.Entry<String, int[]> entry : pointersByOrdinal.entrySet()) {
             map.put(entry.getKey(), toLongArray(entry.getValue()));
@@ -73,7 +75,7 @@ public class NFCompressedGraphIntPointers implements NFCompressedGraphPointers {
     }
 
     private long[] toLongArray(int[] arr) {
-        long l[] = new long[arr.length];
+        long[] l = new long[arr.length];
 
         for(int i=0;i<arr.length;i++) {
             l[i] = arr[i];

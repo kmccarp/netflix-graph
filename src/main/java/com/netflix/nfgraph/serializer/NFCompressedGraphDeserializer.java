@@ -60,12 +60,12 @@ public class NFCompressedGraphDeserializer {
 
     private NFGraphSpec deserializeSpec(DataInputStream dis) throws IOException {
         int numNodes = dis.readInt();
-        NFNodeSpec nodeSpecs[] = new NFNodeSpec[numNodes];
+        NFNodeSpec[] nodeSpecs = new NFNodeSpec[numNodes];
 
         for(int i=0;i<numNodes;i++) {
             String nodeTypeName = dis.readUTF();
             int numProperties = dis.readInt();
-            NFPropertySpec propertySpecs[] = new NFPropertySpec[numProperties];
+            NFPropertySpec[] propertySpecs = new NFPropertySpec[numProperties];
 
             for(int j=0;j<numProperties;j++) {
                 String propertyName = dis.readUTF();
@@ -110,7 +110,7 @@ public class NFCompressedGraphDeserializer {
             data.readFrom(dis, dataLength);
             return data;
         } else {
-            byte data[] = new byte[(int)dataLength];
+            byte[] data = new byte[(int)dataLength];
             dis.readFully(data);
             return new SimpleByteArray(data);
         }
