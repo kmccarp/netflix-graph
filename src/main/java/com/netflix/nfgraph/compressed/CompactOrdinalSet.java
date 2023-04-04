@@ -93,8 +93,9 @@ public class CompactOrdinalSet extends OrdinalSet {
 
     @Override
     public int size() {
-        if(sizeIsUnknown())
-            size = countVInts(reader.copy()); 
+        if(sizeIsUnknown()) {
+            size = countVInts(reader.copy());
+        } 
         return size;
     }
 
@@ -104,8 +105,9 @@ public class CompactOrdinalSet extends OrdinalSet {
     
     private int countVInts(ByteArrayReader myReader) {
         int counter = 0;
-        while(myReader.readVInt() >= 0)
+        while(myReader.readVInt() >= 0) {
             counter++;
+        }
         return counter;
     }
 
