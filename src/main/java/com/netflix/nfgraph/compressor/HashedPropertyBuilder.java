@@ -34,22 +34,23 @@ import com.netflix.nfgraph.util.Mixer;
  */
 public class HashedPropertyBuilder {
 
-	private ByteArrayBuffer buf;
+    private final ByteArrayBuffer buf;
 	
 	public HashedPropertyBuilder(ByteArrayBuffer buf) {
 		this.buf = buf;
 	}
 	
 	public void buildProperty(OrdinalSet ordinals) {
-	    if(ordinals.size() == 0)
-	        return;
+        if(ordinals.size() == 0) {
+            return;
+        }
 	    
-		byte data[] = buildHashedPropertyData(ordinals);
+		byte[] data = buildHashedPropertyData(ordinals);
 		buf.write(data);
 	}
 	
 	private byte[] buildHashedPropertyData(OrdinalSet ordinals) {
-		byte data[] = new byte[calculateByteArraySize(ordinals)];
+		byte[] data = new byte[calculateByteArraySize(ordinals)];
 		
 		OrdinalIterator iter = ordinals.iterator();
 		
@@ -63,7 +64,7 @@ public class HashedPropertyBuilder {
 		return data;
 	}
 
-	private void put(int value, byte data[]) {
+	private void put(int value, byte[] data) {
 	    value += 1;
 	    
 		int bucket = Mixer.hashInt(value) & (data.length - 1);
@@ -75,7 +76,7 @@ public class HashedPropertyBuilder {
 		writeKey(value, bucket, data);
 	}
 
-	private void writeKey(int value, int offset, byte data[]) {
+	private void writeKey(int value, int offset, byte[] data) {
 		int numBytes = calculateVIntSize(value);
 
 		ensureSpaceIsAvailable(numBytes, offset, data);
@@ -83,7 +84,7 @@ public class HashedPropertyBuilder {
 		writeVInt(value, offset, data, numBytes);
 	}
 
-	private void writeVInt(int value, int offset, byte data[], int numBytes) {
+	private void writeVInt(int value, int offset, byte[] data, int numBytes) {
 		int b = (value >>> (7 * (numBytes - 1))) & 0x7F;
 		data[offset] = (byte)b;
 		offset = nextOffset(data.length, offset);
@@ -97,19 +98,21 @@ public class HashedPropertyBuilder {
 	
 	private int nextOffset(int length, int offset) {
 		offset++;
-		if (offset == length)
-			offset = 0;
+        if(offset == length) {
+            offset = 0;
+        }
 		return offset;
 	}
 
 	private int previousOffset(int length, int offset) {
 		offset--;
-		if (offset == -1)
-			offset = length - 1;
+        if(offset == -1) {
+            offset = length - 1;
+        }
 		return offset;
 	}
 	
-	private void ensureSpaceIsAvailable(int requiredSpace, int offset, byte data[]) {
+	private void ensureSpaceIsAvailable(int requiredSpace, int offset, byte[] data) {
 		int copySpaces = 0;
 		int foundSpace = 1;
 		int currentOffset = offset;
@@ -136,7 +139,7 @@ public class HashedPropertyBuilder {
 		}
 	}
 	
-	private int nextEmptyByte(byte data[], int offset) {
+	private int nextEmptyByte(byte[] data, int offset) {
 		while (data[offset] != 0) {
 			offset = nextOffset(data.length, offset);
 		}
@@ -168,9 +171,7 @@ public class HashedPropertyBuilder {
 
 	private int calculateByteArraySizeAfterLoadFactor(int numPopulatedBytes) {
 		int desiredSizeAfterLoadFactor = (numPopulatedBytes * 4) / 3;
-
-		int nextPowerOfTwo = 1 << numBitsUsed(desiredSizeAfterLoadFactor);
-		return nextPowerOfTwo;
+		return 1 << numBitsUsed(desiredSizeAfterLoadFactor);
 	}
 
 	private int numBitsUsed(int value) {
