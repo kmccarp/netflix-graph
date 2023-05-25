@@ -37,10 +37,10 @@ public class NFGraphModelHolder implements Iterable<String> {
 
     public static final String CONNECTION_MODEL_GLOBAL = "global";
 
-    private OrdinalMap<String> modelMap;
+    private final OrdinalMap<String> modelMap;
 	
 	public NFGraphModelHolder() {
-	    modelMap = new OrdinalMap<String>();
+	    modelMap = new OrdinalMap<>();
 	    modelMap.add(CONNECTION_MODEL_GLOBAL);
 	}
 	

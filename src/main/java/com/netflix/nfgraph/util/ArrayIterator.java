@@ -26,15 +26,15 @@ import java.util.Iterator;
  */
 public class ArrayIterator<T> implements Iterator<T> {
 
-    private T arr[];
+    private T[] arr;
     private int size;
-    private int counter = 0;
+    private int counter;
     
-    public ArrayIterator(T arr[]) {
+    public ArrayIterator(T[] arr) {
         this(arr, arr.length);
     }
     
-    public ArrayIterator(T arr[], int size) {
+    public ArrayIterator(T[] arr, int size) {
         this.arr = arr;
         this.size = size;
     }
