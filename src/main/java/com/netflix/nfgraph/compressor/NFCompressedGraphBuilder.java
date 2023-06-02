@@ -69,10 +69,10 @@ public class NFCompressedGraphBuilder {
     }
 
     public NFCompressedGraph buildGraph() {
-    	for(String nodeType : graphSpec.getNodeTypes()) {
-    		NFBuildGraphNodeList nodeOrdinals = buildGraphNodeCache.getNodes(nodeType);
-    		addNodeType(nodeType, nodeOrdinals);
-    	}
+        for(String nodeType : graphSpec.getNodeTypes()) {
+            NFBuildGraphNodeList nodeOrdinals = buildGraphNodeCache.getNodes(nodeType);
+            addNodeType(nodeType, nodeOrdinals);
+        }
 
         return new NFCompressedGraph(graphSpec, modelHolder, graphBuffer.getData(), graphBuffer.length(), compressedGraphPointers);
     }
@@ -81,7 +81,7 @@ public class NFCompressedGraphBuilder {
         NFNodeSpec nodeSpec = graphSpec.getNodeSpec(nodeType);
         long ordinalPointers[] = new long[nodes.size()];
 
-        for(int i=0;i<nodes.size();i++) {
+        for(int i = 0;i < nodes.size();i++) {
             NFBuildGraphNode node = nodes.get(i);
             if(node != null) {
                 ordinalPointers[i] = graphBuffer.length();
@@ -102,7 +102,7 @@ public class NFCompressedGraphBuilder {
 
     private void serializeProperty(NFBuildGraphNode node, NFPropertySpec propertySpec) {
         if(propertySpec.isConnectionModelSpecific()) {
-            for(int i=0;i<modelHolder.size();i++) {
+            for(int i = 0;i < modelHolder.size();i++) {
                 serializeProperty(node, propertySpec, i, modelBuffer);
             }
             copyBuffer(modelBuffer, graphBuffer);
@@ -128,29 +128,29 @@ public class NFCompressedGraphBuilder {
         OrdinalSet connections = node.getConnectionSet(connectionModelIndex, propertySpec);
 
         int numBitsInBitSet = buildGraphNodeCache.numNodes(propertySpec.getToNodeType());
-		int bitSetSize = ((numBitsInBitSet - 1) / 8) + 1;
+        int bitSetSize = ((numBitsInBitSet - 1) / 8) + 1;
 
         if(connections.size() < bitSetSize) {
-        	if(propertySpec.isHashed()) {
-        		hashedPropertyBuilder.buildProperty(connections);
-        		if(fieldBuffer.length() < bitSetSize) {
-        	        int log2BytesUsed = 32 - Integer.numberOfLeadingZeros((int)fieldBuffer.length());
-        	        toBuffer.writeByte((byte)log2BytesUsed);
-        			toBuffer.write(fieldBuffer);
-        			fieldBuffer.reset();
-        			return;
-        		}
-        	} else {
-        		compactPropertyBuilder.buildProperty(connections);
-        		if(fieldBuffer.length() < bitSetSize) {
-        			toBuffer.writeVInt((int)fieldBuffer.length());
-        			toBuffer.write(fieldBuffer);
-        			fieldBuffer.reset();
-        			return;
-        		}
-        	}
+            if(propertySpec.isHashed()) {
+                hashedPropertyBuilder.buildProperty(connections);
+                if(fieldBuffer.length() < bitSetSize) {
+                    int log2BytesUsed = 32 - Integer.numberOfLeadingZeros((int)fieldBuffer.length());
+                    toBuffer.writeByte((byte)log2BytesUsed);
+                    toBuffer.write(fieldBuffer);
+                    fieldBuffer.reset();
+                    return;
+                }
+            } else {
+                compactPropertyBuilder.buildProperty(connections);
+                if(fieldBuffer.length() < bitSetSize) {
+                    toBuffer.writeVInt((int)fieldBuffer.length());
+                    toBuffer.write(fieldBuffer);
+                    fieldBuffer.reset();
+                    return;
+                }
+            }
 
-        	fieldBuffer.reset();
+            fieldBuffer.reset();
         }
 
         bitSetPropertyBuilder.buildProperty(connections, numBitsInBitSet);

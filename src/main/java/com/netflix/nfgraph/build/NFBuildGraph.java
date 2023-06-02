@@ -43,29 +43,29 @@ import com.netflix.nfgraph.spec.NFPropertySpec;
 public class NFBuildGraph extends NFGraph {
 
     private final NFBuildGraphNodeCache nodeCache;
-    
+
     public NFBuildGraph(NFGraphSpec graphSpec) {
         super(graphSpec);
         this.nodeCache = new NFBuildGraphNodeCache(graphSpec, modelHolder);
     }
 
     @Override
-	protected int getConnection(int connectionModelIndex, String nodeType, int ordinal, String propertyName) {
-		NFBuildGraphNode node = nodeCache.getNode(nodeType, ordinal);
+    protected int getConnection(int connectionModelIndex, String nodeType, int ordinal, String propertyName) {
+        NFBuildGraphNode node = nodeCache.getNode(nodeType, ordinal);
         NFPropertySpec propertySpec = getPropertySpec(nodeType, propertyName);
-		return node.getConnection(connectionModelIndex, propertySpec);
-	}
+        return node.getConnection(connectionModelIndex, propertySpec);
+    }
 
     @Override
     protected OrdinalIterator getConnectionIterator(int connectionModelIndex, String nodeType, int ordinal, String propertyName) {
-		NFBuildGraphNode node = nodeCache.getNode(nodeType, ordinal);
+        NFBuildGraphNode node = nodeCache.getNode(nodeType, ordinal);
         NFPropertySpec propertySpec = getPropertySpec(nodeType, propertyName);
         return node.getConnectionIterator(connectionModelIndex, propertySpec);
-	}
+    }
 
     @Override
     protected OrdinalSet getConnectionSet(int connectionModelIndex, String nodeType, int ordinal, String propertyName) {
-		NFBuildGraphNode node = nodeCache.getNode(nodeType, ordinal);
+        NFBuildGraphNode node = nodeCache.getNode(nodeType, ordinal);
         NFPropertySpec propertySpec = getPropertySpec(nodeType, propertyName);
         return node.getConnectionSet(connectionModelIndex, propertySpec);
     }
@@ -78,7 +78,7 @@ public class NFBuildGraph extends NFGraph {
     public void addConnection(String nodeType, int fromOrdinal, String viaProperty, int toOrdinal) {
         addConnection(CONNECTION_MODEL_GLOBAL, nodeType, fromOrdinal, viaProperty, toOrdinal);
     }
-    
+
     /**
      * Add a connection to this graph.  The connection will be in the given connection model.  The connection will be from the node identified by the given 
      * <code>nodeType</code> and <code>fromOrdinal</code>. The connection will be via the specified <code>viaProperty</code> in the {@link NFNodeSpec} for 
@@ -120,7 +120,7 @@ public class NFBuildGraph extends NFGraph {
         fromNode.addConnection(connectionModelIndex, propertySpec, toNode.getOrdinal());
         toNode.incrementNumIncomingConnections();
     }
-    
+
     /**
      * Add a connection model, identified by the parameter <code>connectionModel</code> to this graph.<p>
      * 
@@ -133,7 +133,7 @@ public class NFBuildGraph extends NFGraph {
      * the various {@code addConnection()} may offer a performance boost while building the graph.
      */
     public int addConnectionModel(String connectionModel) {
-    	return modelHolder.getModelIndex(connectionModel);
+        return modelHolder.getModelIndex(connectionModel);
     }
 
     /**

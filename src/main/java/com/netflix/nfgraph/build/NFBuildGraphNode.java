@@ -26,71 +26,71 @@ import com.netflix.nfgraph.spec.NFPropertySpec;
 
 public class NFBuildGraphNode {
 
-	private final NFNodeSpec nodeSpec;
-	private NFBuildGraphNodeConnections[] connectionModelSpecificConnections;
-	private final int ordinal;
-	private int numIncomingConnections;
-    
+    private final NFNodeSpec nodeSpec;
+    private NFBuildGraphNodeConnections[] connectionModelSpecificConnections;
+    private final int ordinal;
+    private int numIncomingConnections;
+
     NFBuildGraphNode(NFNodeSpec nodeSpec, int ordinal, int numKnownConnectionModels) {
-    	this.nodeSpec = nodeSpec;
+        this.nodeSpec = nodeSpec;
         this.connectionModelSpecificConnections = new NFBuildGraphNodeConnections[numKnownConnectionModels];
         this.ordinal = ordinal;
         this.numIncomingConnections = 0;
     }
-    
+
     public int getOrdinal() {
-    	return ordinal;
+        return ordinal;
     }
-    
+
     public int getConnection(int connectionModelIndex, NFPropertySpec spec) {
         NFBuildGraphNodeConnections connections = getConnections(connectionModelIndex);
         if(connections == null)
             return -1;
         return connections.getConnection(spec);
     }
-    
+
     public OrdinalSet getConnectionSet(int connectionModelIndex, NFPropertySpec spec) {
         NFBuildGraphNodeConnections connections = getConnections(connectionModelIndex);
         if(connections == null)
             return OrdinalSet.EMPTY_SET;
         return connections.getConnectionSet(spec);
     }
-    
+
     public OrdinalIterator getConnectionIterator(int connectionModelIndex, NFPropertySpec spec) {
         NFBuildGraphNodeConnections connections = getConnections(connectionModelIndex);
         if(connections == null)
             return OrdinalIterator.EMPTY_ITERATOR;
         return connections.getConnectionIterator(spec);
     }
-    
+
     void addConnection(int connectionModelIndex, NFPropertySpec spec, int ordinal) {
-    	NFBuildGraphNodeConnections connections = getOrCreateConnections(connectionModelIndex);
-    	connections.addConnection(spec, ordinal);
+        NFBuildGraphNodeConnections connections = getOrCreateConnections(connectionModelIndex);
+        connections.addConnection(spec, ordinal);
     }
-    
+
     void incrementNumIncomingConnections() {
-    	numIncomingConnections++;
+        numIncomingConnections++;
     }
-    
+
     int numIncomingConnections() {
-    	return numIncomingConnections;
+        return numIncomingConnections;
     }
-    
+
     private NFBuildGraphNodeConnections getConnections(int connectionModelIndex) {
-    	if(connectionModelSpecificConnections.length <= connectionModelIndex)
-    		return null;
+        if(connectionModelSpecificConnections.length <= connectionModelIndex)
+            return null;
         return connectionModelSpecificConnections[connectionModelIndex];
     }
-    
+
     private NFBuildGraphNodeConnections getOrCreateConnections(int connectionModelIndex) {
-    	if(connectionModelSpecificConnections.length <= connectionModelIndex)
-    		connectionModelSpecificConnections = Arrays.copyOf(connectionModelSpecificConnections, connectionModelIndex + 1);
-    	
-    	if(connectionModelSpecificConnections[connectionModelIndex] == null) {
-    		connectionModelSpecificConnections[connectionModelIndex] = new NFBuildGraphNodeConnections(nodeSpec);
-    	}
+        if(connectionModelSpecificConnections.length <= connectionModelIndex)
+            connectionModelSpecificConnections = Arrays.copyOf(connectionModelSpecificConnections, connectionModelIndex + 1);
+
+        if(connectionModelSpecificConnections[connectionModelIndex] == null) {
+            connectionModelSpecificConnections[connectionModelIndex] = new NFBuildGraphNodeConnections(nodeSpec);
+        }
 
         return connectionModelSpecificConnections[connectionModelIndex];
     }
-    
+
 }

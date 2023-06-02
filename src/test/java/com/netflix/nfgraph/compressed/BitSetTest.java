@@ -59,7 +59,7 @@ public class BitSetTest extends EncodedConnectionSetTest {
 
     @Test
     public void bitSetDoesNotAttemptToReadPastRange() {
-        byte[] data = new byte[] { 1, 1, 1 };
+        byte[] data = new byte[]{1, 1, 1};
 
         ByteArrayReader reader = new ByteArrayReader(new SimpleByteArray(data), 1, 2);
 

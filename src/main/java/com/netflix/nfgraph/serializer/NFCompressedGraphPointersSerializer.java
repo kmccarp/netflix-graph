@@ -54,7 +54,7 @@ public class NFCompressedGraphPointersSerializer {
 
         long currentPointer = 0;
 
-        for(int i=0;i<pointers.length;i++) {
+        for(int i = 0;i < pointers.length;i++) {
             if(pointers[i] == -1) {
                 buf.writeVInt(-1);
             } else {

@@ -29,16 +29,16 @@ public class ArrayIterator<T> implements Iterator<T> {
     private T arr[];
     private int size;
     private int counter = 0;
-    
+
     public ArrayIterator(T arr[]) {
         this(arr, arr.length);
     }
-    
+
     public ArrayIterator(T arr[], int size) {
         this.arr = arr;
         this.size = size;
     }
-    
+
     @Override
     public boolean hasNext() {
         return counter < size;
@@ -53,5 +53,5 @@ public class ArrayIterator<T> implements Iterator<T> {
     public void remove() {
         throw new UnsupportedOperationException("Cannot remove elements from this array.");
     }
-    
+
 }

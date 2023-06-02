@@ -75,7 +75,7 @@ public class NFCompressedGraphIntPointers implements NFCompressedGraphPointers {
     private long[] toLongArray(int[] arr) {
         long l[] = new long[arr.length];
 
-        for(int i=0;i<arr.length;i++) {
+        for(int i = 0;i < arr.length;i++) {
             l[i] = arr[i];
         }
 

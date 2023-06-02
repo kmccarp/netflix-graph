@@ -43,7 +43,7 @@ public abstract class OrdinalSet {
      * <code>O(n)</code> for {@link CompactOrdinalSet} and {@link NFBuildGraphOrdinalSet}
      */
     public abstract boolean contains(int value);
-	
+
     /**
      * Returns <code>true</code> when all specified values are contained in this set.  Depending on the implementation,
      * this operation will have one of two performance characteristics:<p>
@@ -52,54 +52,66 @@ public abstract class OrdinalSet {
      * <code>O(n)</code> for {@link CompactOrdinalSet}, where <code>n</code> is the number of elements in the set.<br>
      * <code>O(n * m)</code> for {@link NFBuildGraphOrdinalSet}.
      */
-	public boolean containsAll(int... values) {
-		for(int value : values) {
-			if(!contains(value))
-				return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * Returns an array containing all elements in the set.
-	 */
-	public int[] asArray() {
-	    int arr[] = new int[size()];
-	    OrdinalIterator iter = iterator();
-	    
-	    int ordinal = iter.nextOrdinal();
-	    int i = 0;
+    public boolean containsAll(int... values) {
+        for(int value : values) {
+            if(!contains(value))
+                return false;
+        }
+        return true;
+    }
 
-	    while(ordinal != NO_MORE_ORDINALS) {
-	        arr[i++] = ordinal;
-	        ordinal = iter.nextOrdinal();
-	    }
-	    
-	    return arr;
-	}
-	
-	/**
-	 * @return an {@link OrdinalIterator} over this set.
-	 */
-	public abstract OrdinalIterator iterator();
-	
-	/**
-	 * @return the number of ordinals in this set.
-	 */
-	public abstract int size();
+    /**
+     * Returns an array containing all elements in the set.
+     */
+    public int[] asArray() {
+        int arr[] = new int[size()];
+        OrdinalIterator iter = iterator();
 
-	private static final int EMPTY_ORDINAL_ARRAY[] = new int[0];
+        int ordinal = iter.nextOrdinal();
+        int i = 0;
 
-	/**
-	 * An empty <code>OrdinalSet</code>.
-	 */
-	public static final OrdinalSet EMPTY_SET = new OrdinalSet() {
-		@Override public boolean contains(int value) { return false; }
-		
-		@Override public int[] asArray() { return EMPTY_ORDINAL_ARRAY; }
+        while(ordinal != NO_MORE_ORDINALS) {
+            arr[i++] = ordinal;
+            ordinal = iter.nextOrdinal();
+        }
 
-		@Override public OrdinalIterator iterator() { return EMPTY_ITERATOR; }
+        return arr;
+    }
 
-		@Override public int size() { return 0; }
-	};
+    /**
+     * @return an {@link OrdinalIterator} over this set.
+     */
+    public abstract OrdinalIterator iterator();
+
+    /**
+     * @return the number of ordinals in this set.
+     */
+    public abstract int size();
+
+    private static final int EMPTY_ORDINAL_ARRAY[] = new int[0];
+
+    /**
+     * An empty <code>OrdinalSet</code>.
+     */
+    public static final OrdinalSet EMPTY_SET = new OrdinalSet() {
+        @Override
+        public boolean contains(int value) {
+            return false;
+        }
+
+        @Override
+        public int[] asArray() {
+            return EMPTY_ORDINAL_ARRAY;
+        }
+
+        @Override
+        public OrdinalIterator iterator() {
+            return EMPTY_ITERATOR;
+        }
+
+        @Override
+        public int size() {
+            return 0;
+        }
+    };
 }

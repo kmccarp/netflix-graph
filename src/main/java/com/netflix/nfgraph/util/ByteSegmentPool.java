@@ -26,19 +26,19 @@ import java.util.LinkedList;
  * is accessing this memory pool at any given time.
  */
 public class ByteSegmentPool {
-    
+
     private final LinkedList<byte[]> pooledSegments;
     private final int log2OfSegmentSize;
-    
+
     public ByteSegmentPool(int log2OfSegmentSize) {
         this.pooledSegments = new LinkedList<>();
         this.log2OfSegmentSize = log2OfSegmentSize;
     }
-    
+
     public int getLog2OfSegmentSize() {
         return log2OfSegmentSize;
     }
-    
+
     public byte[] getSegment() {
         if(pooledSegments.isEmpty())
             return new byte[1 << log2OfSegmentSize];
@@ -46,11 +46,11 @@ public class ByteSegmentPool {
             byte[] segment = pooledSegments.removeFirst();
             Arrays.fill(segment, (byte)0);
             return segment;
-        } catch(NullPointerException ex) {
+        } catch (NullPointerException ex) {
             throw ex;
         }
     }
-    
+
     public void returnSegment(byte[] segment) {
         if(segment != null)
             pooledSegments.addLast(segment);

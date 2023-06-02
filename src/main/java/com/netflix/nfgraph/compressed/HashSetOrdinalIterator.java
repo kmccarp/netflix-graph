@@ -31,7 +31,7 @@ public class HashSetOrdinalIterator implements OrdinalIterator {
     private final int beginOffset;
     private int offset = 0;
     private boolean firstValue;
-    
+
     public HashSetOrdinalIterator(ByteArrayReader reader) {
         this.reader = reader;
         seekBeginByte();
@@ -42,27 +42,27 @@ public class HashSetOrdinalIterator implements OrdinalIterator {
     @Override
     public int nextOrdinal() {
         seekBeginByte();
-        
+
         if(offset == beginOffset) {
             if(!firstValue)
                 return NO_MORE_ORDINALS;
             firstValue = false;
         }
-        
+
         int value = reader.getByte(offset);
         nextOffset();
-        
+
         while((reader.getByte(offset) & 0x80) != 0) {
             value <<= 7;
             value |= reader.getByte(offset) & 0x7F;
             nextOffset();
         }
-        
+
         return value - 1;
     }
 
     @Override
-    public void reset() { 
+    public void reset() {
         offset = beginOffset;
         firstValue = true;
     }
@@ -76,14 +76,14 @@ public class HashSetOrdinalIterator implements OrdinalIterator {
     public boolean isOrdered() {
         return false;
     }
-    
+
     private void nextOffset() {
         offset++;
         if(offset >= reader.length()) {
             offset = 0;
         }
     }
-    
+
     private void seekBeginByte() {
         while((reader.getByte(offset) & 0x80) != 0 || reader.getByte(offset) == 0)
             nextOffset();

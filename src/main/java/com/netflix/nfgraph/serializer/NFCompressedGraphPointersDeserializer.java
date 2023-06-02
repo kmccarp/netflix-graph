@@ -45,7 +45,7 @@ public class NFCompressedGraphPointersDeserializer {
     private NFCompressedGraphLongPointers deserializeLongPointers(DataInputStream dis, int numTypes) throws IOException {
         NFCompressedGraphLongPointers pointers = new NFCompressedGraphLongPointers();
 
-        for(int i=0;i<numTypes;i++) {
+        for(int i = 0;i < numTypes;i++) {
             String nodeType = dis.readUTF();
             pointers.addPointers(nodeType, deserializeLongPointerArray(dis));
         }
@@ -66,7 +66,7 @@ public class NFCompressedGraphPointersDeserializer {
 
         long currentPointer = 0;
 
-        for(int i=0;i<numNodes;i++) {
+        for(int i = 0;i < numNodes;i++) {
             long vInt = reader.readVLong();
             if(vInt == -1) {
                 pointers[i] = -1;
@@ -82,7 +82,7 @@ public class NFCompressedGraphPointersDeserializer {
     private NFCompressedGraphIntPointers deserializeIntPointers(DataInputStream dis, int numTypes) throws IOException {
         NFCompressedGraphIntPointers pointers = new NFCompressedGraphIntPointers();
 
-        for(int i=0;i<numTypes;i++) {
+        for(int i = 0;i < numTypes;i++) {
             String nodeType = dis.readUTF();
             pointers.addPointers(nodeType, deserializeIntPointerArray(dis));
         }
@@ -103,7 +103,7 @@ public class NFCompressedGraphPointersDeserializer {
 
         long currentPointer = 0;
 
-        for(int i=0;i<numNodes;i++) {
+        for(int i = 0;i < numNodes;i++) {
             int vInt = reader.readVInt();
             if(vInt == -1) {
                 pointers[i] = -1;
@@ -115,7 +115,6 @@ public class NFCompressedGraphPointersDeserializer {
 
         return pointers;
     }
-
 
 
 }

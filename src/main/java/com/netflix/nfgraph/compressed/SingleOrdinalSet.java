@@ -26,7 +26,7 @@ import com.netflix.nfgraph.OrdinalSet;
 public class SingleOrdinalSet extends OrdinalSet {
 
     private final int ordinal;
-    
+
     public SingleOrdinalSet(int ordinal) {
         this.ordinal = ordinal;
     }
@@ -38,7 +38,7 @@ public class SingleOrdinalSet extends OrdinalSet {
 
     @Override
     public int[] asArray() {
-        return new int[] { ordinal };
+        return new int[]{ordinal};
     }
 
     @Override
@@ -50,5 +50,5 @@ public class SingleOrdinalSet extends OrdinalSet {
     public int size() {
         return 1;
     }
-    
+
 }

@@ -103,7 +103,7 @@ public class HashSetOrdinalSet extends OrdinalSet {
 
     private int countHashEntries() {
         int counter = 0;
-        for(int i=0;i<reader.length();i++) {
+        for(int i = 0;i < reader.length();i++) {
             byte b = reader.getByte(i);
             if(b != 0 && (b & 0x80) == 0)
                 counter++;

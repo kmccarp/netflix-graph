@@ -47,44 +47,44 @@ public class NFPropertySpec {
     /**
      * A property spec instantiated with this flag will not be separable into connection models.
      */
-	public static final int GLOBAL = 0x00;
-	
+    public static final int GLOBAL = 0x00;
+
     /**
      * A property spec instantiated with this flag will be separable into connection models.
      */
-	public static final int MODEL_SPECIFIC = 0x01;
-	
+    public static final int MODEL_SPECIFIC = 0x01;
+
     /**
      * A property spec instantiated with this flag will be allowed multiple connections.
      */
-	public static final int MULTIPLE = 0x00;
-	
+    public static final int MULTIPLE = 0x00;
+
     /**
      * A property spec instantiated with this flag will be allowed only a single connection.
      */
-	public static final int SINGLE = 0x02;
+    public static final int SINGLE = 0x02;
 
     /**
      * A {@link #MULTIPLE} property instantiated with this flag will be represented as a {@link BitSetOrdinalSet} in an {@link NFCompressedGraph}.
      * 
      * @see BitSetOrdinalSet
      */
-	public static final int HASH = 0x04;
-	
+    public static final int HASH = 0x04;
+
     /**
      * A {@link #MULTIPLE} property instantiated with this flag will be represented as a {@link CompactOrdinalSet} in an {@link NFCompressedGraph}.
      * 
      * @see CompactOrdinalSet
      */
-	public static final int COMPACT = 0x00;
-	
+    public static final int COMPACT = 0x00;
+
     private final boolean isGlobal;
     private final boolean isMultiple;
     private final boolean isHashed;
-    
+
     private final String name;
     private final String toNodeType;
-    
+
     private int propertyIndex;
 
     /**
@@ -96,25 +96,25 @@ public class NFPropertySpec {
      * 
      */
     public NFPropertySpec(String name, String toNodeType, int flags) {
-    	this.name = name;
-    	this.toNodeType = toNodeType;
-    	this.isGlobal = (flags & MODEL_SPECIFIC) == 0;
-    	this.isMultiple = (flags & SINGLE) == 0;
-    	this.isHashed = (flags & HASH) != 0;
+        this.name = name;
+        this.toNodeType = toNodeType;
+        this.isGlobal = (flags & MODEL_SPECIFIC) == 0;
+        this.isMultiple = (flags & SINGLE) == 0;
+        this.isHashed = (flags & HASH) != 0;
     }
-    
+
     public NFPropertySpec(String name, String toNodeType, boolean isGlobal, boolean isMultiple, boolean isHashed) {
-    	this.name = name;
-    	this.toNodeType = toNodeType;
-    	this.isGlobal = isGlobal;
+        this.name = name;
+        this.toNodeType = toNodeType;
+        this.isGlobal = isGlobal;
         this.isMultiple = isMultiple;
         this.isHashed = isHashed;
     }
 
     public boolean isConnectionModelSpecific() {
-    	return !isGlobal;
+        return !isGlobal;
     }
-    
+
     public boolean isGlobal() {
         return isGlobal;
     }
@@ -122,15 +122,15 @@ public class NFPropertySpec {
     public boolean isMultiple() {
         return isMultiple;
     }
-    
+
     public boolean isSingle() {
-    	return !isMultiple;
+        return !isMultiple;
     }
-    
+
     public boolean isHashed() {
-    	return isHashed;
+        return isHashed;
     }
-    
+
     public boolean isCompact() {
         return !isHashed;
     }
@@ -138,22 +138,22 @@ public class NFPropertySpec {
     public String getName() {
         return name;
     }
-    
+
     public String getToNodeType() {
-    	return toNodeType;
+        return toNodeType;
     }
-    
+
     void setPropertyIndex(int propertyIndex) {
-    	this.propertyIndex = propertyIndex;
+        this.propertyIndex = propertyIndex;
     }
-    
+
     /**
      * Used by the {@link NFBuildGraph}.
      * 
      * It is unlikely that this method will be required externally. 
      */
     public int getPropertyIndex() {
-    	return this.propertyIndex;
+        return this.propertyIndex;
     }
 
 }

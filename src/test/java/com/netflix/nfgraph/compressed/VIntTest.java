@@ -42,7 +42,7 @@ public class VIntTest {
         ByteArrayBuffer buf = new ByteArrayBuffer();
         randomValues = new int[rand.nextInt(10000)];
 
-        for(int i=0;i<randomValues.length;i++) {
+        for(int i = 0;i < randomValues.length;i++) {
             randomValues[i] = rand.nextInt(Integer.MAX_VALUE);
             buf.writeVInt(randomValues[i]);
         }
@@ -54,7 +54,7 @@ public class VIntTest {
     public void decodedValuesAreSameAsEncodedValues() {
         ByteArrayReader reader = new ByteArrayReader(data, 0);
 
-        for(int i=0;i<randomValues.length;i++) {
+        for(int i = 0;i < randomValues.length;i++) {
             assertEquals("seed: " + seed, randomValues[i], reader.readVInt());
         }
     }

@@ -26,16 +26,16 @@ public class SingleOrdinalIterator implements OrdinalIterator {
 
     private final int ordinal;
     private boolean returned;
-    
+
     public SingleOrdinalIterator(int ordinal) {
         this.ordinal = ordinal;
     }
-    
+
     @Override
     public int nextOrdinal() {
         if(returned)
             return NO_MORE_ORDINALS;
-        
+
         returned = true;
         return ordinal;
     }

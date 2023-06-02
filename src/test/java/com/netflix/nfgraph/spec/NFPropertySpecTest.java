@@ -27,23 +27,23 @@ import org.junit.Test;
 
 public class NFPropertySpecTest {
 
-	@Test
-	public void testInstantiateWithFlagsDefault() {
-		NFPropertySpec propertySpec = new NFPropertySpec(null, null, 0);
-		
-		assertTrue(propertySpec.isGlobal());
-		assertTrue(propertySpec.isMultiple());
-		assertFalse(propertySpec.isHashed());
-	}
-	
-	
-	@Test
-	public void testInstantiateWithFlags() {
-		NFPropertySpec propertySpec = new NFPropertySpec(null, null, MODEL_SPECIFIC | HASH | SINGLE);
-		
-		assertFalse(propertySpec.isGlobal());
-		assertFalse(propertySpec.isMultiple());
-		assertTrue(propertySpec.isHashed());
-	}
-	
+    @Test
+    public void testInstantiateWithFlagsDefault() {
+        NFPropertySpec propertySpec = new NFPropertySpec(null, null, 0);
+
+        assertTrue(propertySpec.isGlobal());
+        assertTrue(propertySpec.isMultiple());
+        assertFalse(propertySpec.isHashed());
+    }
+
+
+    @Test
+    public void testInstantiateWithFlags() {
+        NFPropertySpec propertySpec = new NFPropertySpec(null, null, MODEL_SPECIFIC | HASH | SINGLE);
+
+        assertFalse(propertySpec.isGlobal());
+        assertFalse(propertySpec.isMultiple());
+        assertTrue(propertySpec.isHashed());
+    }
+
 }

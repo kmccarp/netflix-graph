@@ -64,15 +64,16 @@ public class BitSetOrdinalSet extends OrdinalSet {
     @Override
     public int size() {
         int cardinalitySum = 0;
-        for(int i=0;i<(reader.length());i++) {
+        for(int i = 0;i < (reader.length());i++) {
             cardinalitySum += BITS_SET_TABLE[reader.getByte(i) & 0xFF];
         }
         return cardinalitySum;
     }
 
     private static final int BITS_SET_TABLE[] = new int[256];
+
     static {
-        for(int i=0;i<256;i++) {
+        for(int i = 0;i < 256;i++) {
             BITS_SET_TABLE[i] = (i & 1) + BITS_SET_TABLE[i / 2];
         }
     }

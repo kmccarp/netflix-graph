@@ -33,29 +33,29 @@ import com.netflix.nfgraph.util.ByteArrayBuffer;
  */
 public class BitSetPropertyBuilder {
 
-	private final ByteArrayBuffer buf;
-	
-	public BitSetPropertyBuilder(ByteArrayBuffer buf) {
-		this.buf = buf;
-	}
-	
-	public void buildProperty(OrdinalSet ordinals, int numBits) {
-		byte[] data = buildBitSetData(numBits, ordinals.iterator());
-		buf.write(data);
-	}
+    private final ByteArrayBuffer buf;
 
-	private byte[] buildBitSetData(int numBits, OrdinalIterator iter) {
-		int numBytes = ((numBits - 1) / 8) + 1;
+    public BitSetPropertyBuilder(ByteArrayBuffer buf) {
+        this.buf = buf;
+    }
+
+    public void buildProperty(OrdinalSet ordinals, int numBits) {
+        byte[] data = buildBitSetData(numBits, ordinals.iterator());
+        buf.write(data);
+    }
+
+    private byte[] buildBitSetData(int numBits, OrdinalIterator iter) {
+        int numBytes = ((numBits - 1) / 8) + 1;
         byte data[] = new byte[numBytes];
-		
-		int ordinal = iter.nextOrdinal();
-		
-		while(ordinal != NO_MORE_ORDINALS) {
-			data[ordinal >> 3] |= (byte)(1 << (ordinal & 0x07));
-			ordinal = iter.nextOrdinal();
-		}
-		
-		return data;
-	}
-	
+
+        int ordinal = iter.nextOrdinal();
+
+        while(ordinal != NO_MORE_ORDINALS) {
+            data[ordinal >> 3] |= (byte)(1 << (ordinal & 0x07));
+            ordinal = iter.nextOrdinal();
+        }
+
+        return data;
+    }
+
 }

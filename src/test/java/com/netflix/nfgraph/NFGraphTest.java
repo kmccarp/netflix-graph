@@ -28,26 +28,26 @@ import org.junit.Test;
 import com.netflix.nfgraph.compressed.NFCompressedGraph;
 
 public class NFGraphTest {
-    
+
     RandomizedGraphBuilder randomizedGraphBuilder;
 
     private long seed;
-    
+
     private NFGraph graph;
-    
+
     @Before
     public void setUp() throws IOException {
         Random rand = new Random();
-        
+
         int numANodes = rand.nextInt(10000);
         int numBNodes = rand.nextInt(10000);
-        
+
         seed = System.currentTimeMillis();
-        
+
         randomizedGraphBuilder = new RandomizedGraphBuilder(numANodes, numBNodes);
-        
+
         NFCompressedGraph compressedGraph = randomizedGraphBuilder.build(new Random(seed));
-        
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         compressedGraph.writeTo(outputStream);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
@@ -58,7 +58,6 @@ public class NFGraphTest {
     public void randomizedTest() {
         randomizedGraphBuilder.assertGraph(graph, new Random(seed));
     }
-
 
 
 }

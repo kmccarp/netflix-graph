@@ -29,9 +29,9 @@ import com.netflix.nfgraph.util.ArrayIterator;
  */
 public class NFNodeSpec implements Iterable<NFPropertySpec> {
 
-	private final String nodeTypeName;
+    private final String nodeTypeName;
     private final NFPropertySpec propertySpecs[];
-    
+
     private final int numSingleProperties;
     private final int numMultipleProperties;
 
@@ -42,28 +42,28 @@ public class NFNodeSpec implements Iterable<NFPropertySpec> {
      * @param propertySpecs a complete listing of the properties available for this node type.
      */
     public NFNodeSpec(String nodeTypeName, NFPropertySpec... propertySpecs) {
-    	this.nodeTypeName = nodeTypeName;
+        this.nodeTypeName = nodeTypeName;
         this.propertySpecs = propertySpecs;
-        
+
         int numSingleProperties = 0;
         int numMultipleProperties = 0;
-        
+
         for(NFPropertySpec propertySpec : propertySpecs) {
-        	propertySpec.setPropertyIndex(propertySpec.isSingle() ? numSingleProperties++ : numMultipleProperties++);
+            propertySpec.setPropertyIndex(propertySpec.isSingle() ? numSingleProperties++ : numMultipleProperties++);
         }
-        
+
         this.numSingleProperties = numSingleProperties;
         this.numMultipleProperties = numMultipleProperties;
     }
-    
+
     public String getNodeTypeName() {
-    	return nodeTypeName;
+        return nodeTypeName;
     }
 
     public NFPropertySpec[] getPropertySpecs() {
         return propertySpecs;
     }
-    
+
     public NFPropertySpec getPropertySpec(String propertyName) {
         for(NFPropertySpec spec : propertySpecs) {
             if(spec.getName().equals(propertyName))
@@ -71,18 +71,18 @@ public class NFNodeSpec implements Iterable<NFPropertySpec> {
         }
         throw new NFGraphException("Property " + propertyName + " is undefined for node type " + nodeTypeName);
     }
-    
+
     public int getNumSingleProperties() {
-    	return numSingleProperties;
+        return numSingleProperties;
     }
-    
+
     public int getNumMultipleProperties() {
-    	return numMultipleProperties;
+        return numMultipleProperties;
     }
 
     @Override
     public Iterator<NFPropertySpec> iterator() {
         return new ArrayIterator<NFPropertySpec>(propertySpecs);
     }
-    
+
 }

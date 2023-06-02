@@ -22,14 +22,14 @@ public class Mixer {
     /**
      * Thomas Wang's commonly used 32 bit mix function. 
      */
-	public static int hashInt(int key) {
-		key = ~key + (key << 15);
-		key = key ^ (key >>> 12);
-		key = key + (key << 2);
-		key = key ^ (key >>> 4);
-		key = key * 2057;
-		key = key ^ (key >>> 16);
-		return key & Integer.MAX_VALUE;
-	}
+    public static int hashInt(int key) {
+        key = ~key + (key << 15);
+        key = key ^ (key >>> 12);
+        key = key + (key << 2);
+        key = key ^ (key >>> 4);
+        key = key * 2057;
+        key = key ^ (key >>> 16);
+        return key & Integer.MAX_VALUE;
+    }
 
 }

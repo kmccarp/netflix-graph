@@ -50,22 +50,22 @@ public class OrdinalMap<T> implements Iterable<T> {
 
     private int hashedOrdinalArray[];
     private T objectsByOrdinal[];
-    
+
     private int size;
-    
+
     public OrdinalMap() {
         this(10);
     }
-    
+
     @SuppressWarnings("unchecked")
     public OrdinalMap(int expectedSize) {
         int mapArraySize = 1 << (32 - Integer.numberOfLeadingZeros(expectedSize * 4 / 3));
         int ordinalArraySize = mapArraySize * 3 / 4;
-        
+
         hashedOrdinalArray = newHashedOrdinalArray(mapArraySize);
-        objectsByOrdinal = (T[]) new Object[ordinalArraySize];
+        objectsByOrdinal = (T[])new Object[ordinalArraySize];
     }
-    
+
     /**
      * Add an object into this <code>OrdinalMap</code>.  If the same object (or an {@link Object#equals(Object)} object) is
      * already in the map, then no changes will be made.
@@ -76,36 +76,36 @@ public class OrdinalMap<T> implements Iterable<T> {
         int ordinal = get(obj);
         if(ordinal != -1)
             return ordinal;
-        
+
         if(size == objectsByOrdinal.length)
             growCapacity();
-        
+
         objectsByOrdinal[size] = obj;
         hashOrdinalIntoArray(size, hashedOrdinalArray);
-        
+
         return size++;
     }
-    
+
     /**
      * @return the ordinal of an object previously added to the map.  If the object has not been added to the map, returns -1 instead. 
      */
     public int get(T obj) {
         int hash = Mixer.hashInt(obj.hashCode());
-        
+
         int bucket = hash % hashedOrdinalArray.length;
         int ordinal = hashedOrdinalArray[bucket];
-        
+
         while(ordinal != -1) {
             if(objectsByOrdinal[ordinal].equals(obj))
                 return ordinal;
-            
+
             bucket = (bucket + 1) % hashedOrdinalArray.length;
             ordinal = hashedOrdinalArray[bucket];
         }
-        
+
         return -1;
     }
-    
+
     /**
      * @return the object for a given ordinal.  If the ordinal does not yet exist, returns null.
      */
@@ -114,37 +114,37 @@ public class OrdinalMap<T> implements Iterable<T> {
             return null;
         return objectsByOrdinal[ordinal];
     }
-    
+
     /**
      * @return the number of objects in this map.
      */
     public int size() {
         return size;
     }
-    
+
     private void growCapacity() {
         int newHashedOrdinalArray[] = newHashedOrdinalArray(hashedOrdinalArray.length * 2);
-        
-        for(int i=0;i<objectsByOrdinal.length;i++) {
+
+        for(int i = 0;i < objectsByOrdinal.length;i++) {
             hashOrdinalIntoArray(i, newHashedOrdinalArray);
         }
-        
+
         objectsByOrdinal = Arrays.copyOf(objectsByOrdinal, objectsByOrdinal.length * 2);
         hashedOrdinalArray = newHashedOrdinalArray;
     }
-    
+
     private void hashOrdinalIntoArray(int ordinal, int hashedOrdinalArray[]) {
         int hash = Mixer.hashInt(objectsByOrdinal[ordinal].hashCode());
-        
+
         int bucket = hash % hashedOrdinalArray.length;
-        
+
         while(hashedOrdinalArray[bucket] != -1) {
             bucket = (bucket + 1) % hashedOrdinalArray.length;
         }
-        
+
         hashedOrdinalArray[bucket] = ordinal;
     }
-    
+
     private int[] newHashedOrdinalArray(int length) {
         int arr[] = new int[length];
         Arrays.fill(arr, -1);
@@ -158,5 +158,5 @@ public class OrdinalMap<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new ArrayIterator<T>(objectsByOrdinal, size);
     }
-    
+
 }

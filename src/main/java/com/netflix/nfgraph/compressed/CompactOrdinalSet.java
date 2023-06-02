@@ -46,7 +46,7 @@ public class CompactOrdinalSet extends OrdinalSet {
 
     private final ByteArrayReader reader;
     private int size = Integer.MIN_VALUE;
-    
+
     public CompactOrdinalSet(ByteArrayReader reader) {
         this.reader = reader;
     }
@@ -54,25 +54,25 @@ public class CompactOrdinalSet extends OrdinalSet {
     @Override
     public boolean contains(int value) {
         OrdinalIterator iter = iterator();
-        
+
         int iterValue = iter.nextOrdinal();
-        
+
         while(iterValue < value) {
             iterValue = iter.nextOrdinal();
         }
-        
+
         return iterValue == value;
     }
-    
+
     @Override
     public boolean containsAll(int... values) {
         OrdinalIterator iter = iterator();
-        
+
         Arrays.sort(values);
-        
+
         int valuesIndex = 0;
         int setValue = iter.nextOrdinal();
-        
+
         while(valuesIndex < values.length) {
             if(setValue == values[valuesIndex]) {
                 valuesIndex++;
@@ -82,7 +82,7 @@ public class CompactOrdinalSet extends OrdinalSet {
                 break;
             }
         }
-        
+
         return valuesIndex == values.length;
     }
 
@@ -94,14 +94,14 @@ public class CompactOrdinalSet extends OrdinalSet {
     @Override
     public int size() {
         if(sizeIsUnknown())
-            size = countVInts(reader.copy()); 
+            size = countVInts(reader.copy());
         return size;
     }
 
     private boolean sizeIsUnknown() {
         return size == Integer.MIN_VALUE;
     }
-    
+
     private int countVInts(ByteArrayReader myReader) {
         int counter = 0;
         while(myReader.readVInt() >= 0)

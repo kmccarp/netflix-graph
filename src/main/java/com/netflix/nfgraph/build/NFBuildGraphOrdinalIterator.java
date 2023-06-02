@@ -25,31 +25,31 @@ import com.netflix.nfgraph.OrdinalIterator;
  * An implementation of {@link OrdinalIterator} returned for connections in an {@link NFBuildGraph}.
  */
 public class NFBuildGraphOrdinalIterator implements OrdinalIterator {
-    
+
     private final int ordinals[];
-    
+
     private int currentPositionInList;
     private int previousOrdinal = Integer.MIN_VALUE;
-    
+
     NFBuildGraphOrdinalIterator(int ordinals[], int size) {
-    	this.ordinals = Arrays.copyOfRange(ordinals, 0, size);
-    	Arrays.sort(this.ordinals);
+        this.ordinals = Arrays.copyOfRange(ordinals, 0, size);
+        Arrays.sort(this.ordinals);
     }
-    
+
     private NFBuildGraphOrdinalIterator(int ordinals[]) {
-    	this.ordinals = ordinals;
+        this.ordinals = ordinals;
     }
-    
+
     @Override
     public int nextOrdinal() {
         if(previousOrdinal == NO_MORE_ORDINALS)
             return NO_MORE_ORDINALS;
-        
+
         int nextOrdinal = nextOrdinalInList();
         while(nextOrdinal == previousOrdinal) {
             nextOrdinal = nextOrdinalInList();
         }
-        
+
         previousOrdinal = nextOrdinal;
         return nextOrdinal;
     }
@@ -59,10 +59,10 @@ public class NFBuildGraphOrdinalIterator implements OrdinalIterator {
         this.previousOrdinal = 0;
         this.currentPositionInList = 0;
     }
-    
+
     @Override
     public OrdinalIterator copy() {
-        return new NFBuildGraphOrdinalIterator(ordinals); 
+        return new NFBuildGraphOrdinalIterator(ordinals);
     }
 
     @Override
@@ -75,5 +75,5 @@ public class NFBuildGraphOrdinalIterator implements OrdinalIterator {
             return NO_MORE_ORDINALS;
         return ordinals[currentPositionInList++];
     }
-    
+
 }

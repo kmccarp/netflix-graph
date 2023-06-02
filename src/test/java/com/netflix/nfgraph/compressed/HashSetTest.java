@@ -55,18 +55,18 @@ public class HashSetTest extends EncodedConnectionSetTest {
 
     @Test
     public void singleOrdinal127IsSizedAppropriately() {
-    	ByteArrayBuffer buf = new ByteArrayBuffer();
+        ByteArrayBuffer buf = new ByteArrayBuffer();
 
-    	HashedPropertyBuilder builder = new HashedPropertyBuilder(buf);
+        HashedPropertyBuilder builder = new HashedPropertyBuilder(buf);
 
-    	builder.buildProperty(new SingleOrdinalSet(127));
+        builder.buildProperty(new SingleOrdinalSet(127));
 
-    	ByteArrayReader reader = new ByteArrayReader(buf.getData(), 0, buf.length());
+        ByteArrayReader reader = new ByteArrayReader(buf.getData(), 0, buf.length());
 
-    	OrdinalSet set = new HashSetOrdinalSet(reader);
+        OrdinalSet set = new HashSetOrdinalSet(reader);
 
-    	assertTrue(set.contains(127));
-    	assertFalse(set.contains(128));
+        assertTrue(set.contains(127));
+        assertFalse(set.contains(128));
     }
 
 

@@ -38,26 +38,26 @@ public class NFGraphModelHolder implements Iterable<String> {
     public static final String CONNECTION_MODEL_GLOBAL = "global";
 
     private OrdinalMap<String> modelMap;
-	
-	public NFGraphModelHolder() {
-	    modelMap = new OrdinalMap<String>();
-	    modelMap.add(CONNECTION_MODEL_GLOBAL);
-	}
-	
-	public int size() {
-		return modelMap.size();
-	}
-	
-	public int getModelIndex(String connectionModel) {
-	    return modelMap.add(connectionModel);
-	}
-	
-	public String getModel(int modelIndex) {
-	    return modelMap.get(modelIndex);
-	}
-	
-	public Iterator<String> iterator() {
-	    return modelMap.iterator();
-	}
+
+    public NFGraphModelHolder() {
+        modelMap = new OrdinalMap<String>();
+        modelMap.add(CONNECTION_MODEL_GLOBAL);
+    }
+
+    public int size() {
+        return modelMap.size();
+    }
+
+    public int getModelIndex(String connectionModel) {
+        return modelMap.add(connectionModel);
+    }
+
+    public String getModel(int modelIndex) {
+        return modelMap.get(modelIndex);
+    }
+
+    public Iterator<String> iterator() {
+        return modelMap.iterator();
+    }
 
 }

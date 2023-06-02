@@ -29,7 +29,7 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
 
     private final ByteArrayReader reader;
     public int offset;
-    
+
     public BitSetOrdinalIterator(ByteArrayReader reader) {
         this.reader = reader;
     }
@@ -41,9 +41,9 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
     public int nextOrdinal() {
         if(offset >>> 3 == reader.length())
             return NO_MORE_ORDINALS;
-        
+
         skipToNextPopulatedByte();
-        
+
         while(moreBytesToRead()) {
             if(testCurrentBit()) {
                 return offset++;
@@ -69,7 +69,7 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
     public OrdinalIterator copy() {
         return new BitSetOrdinalIterator(reader);
     }
-    
+
     /**
      * @return <code>true</code>
      */
@@ -77,13 +77,13 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
     public boolean isOrdered() {
         return true;
     }
-    
+
     private void skipToNextPopulatedByte() {
-        if(moreBytesToRead() 
-                && (currentByte() >>> (offset & 0x07)) == 0) {
+        if(moreBytesToRead()
+            && (currentByte() >>> (offset & 0x07)) == 0) {
             offset += 0x08;
             offset &= ~0x07;
-            
+
             while(moreBytesToRead() && currentByte() == 0)
                 offset += 0x08;
         }
@@ -97,9 +97,9 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
         int b = currentByte();
         return (b & (1 << (offset & 0x07))) != 0;
     }
-    
+
     private byte currentByte() {
         return reader.getByte(offset >>> 3);
     }
-    
+
 }

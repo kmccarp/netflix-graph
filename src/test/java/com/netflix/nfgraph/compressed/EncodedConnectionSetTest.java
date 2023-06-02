@@ -58,7 +58,9 @@ public abstract class EncodedConnectionSetTest {
     }
 
     protected abstract ByteData generateCompressedData(OrdinalSet ordinals);
+
     protected abstract OrdinalSet createOrdinalSet();
+
     protected abstract int maximumTotalOrdinals();
 
     private void createRandom() {
@@ -73,7 +75,7 @@ public abstract class EncodedConnectionSetTest {
 
         int ordinals[] = new int[numOrdinalsInSet];
 
-        for(int i=0; i<ordinals.length; i++) {
+        for(int i = 0;i < ordinals.length;i++) {
             int ordinal = rand.nextInt(totalOrdinals);
             while(expectedOrdinals.contains(ordinal))
                 ordinal = rand.nextInt(totalOrdinals);
@@ -148,7 +150,7 @@ public abstract class EncodedConnectionSetTest {
     public void ordinalSetDoesNotContainUnexpectedOrdinals() {
         OrdinalSet ordinalSet = createOrdinalSet();
 
-        for(int i=0;i<totalOrdinals;i++) {
+        for(int i = 0;i < totalOrdinals;i++) {
             if(!expectedOrdinals.contains(i)) {
                 assertFalse("seed: " + seed, ordinalSet.contains(i));
             }
@@ -184,7 +186,7 @@ public abstract class EncodedConnectionSetTest {
                 returnedOrdinals.add(ordinal);
                 ordinal = iter.nextOrdinal();
             }
-        } catch(Throwable t) {
+        } catch (Throwable t) {
             t.printStackTrace();
             fail("seed: " + seed);
         }

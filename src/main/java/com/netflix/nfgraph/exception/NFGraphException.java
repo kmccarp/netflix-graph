@@ -8,7 +8,7 @@ import com.netflix.nfgraph.NFGraph;
 public class NFGraphException extends RuntimeException {
 
     private static final long serialVersionUID = -9177454492889434892L;
-    
+
     public NFGraphException(String message) {
         super(message);
     }

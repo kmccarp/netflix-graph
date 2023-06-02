@@ -53,7 +53,7 @@ public class CompactOrdinalIterator implements OrdinalIterator {
     public OrdinalIterator copy() {
         return new CompactOrdinalIterator(arrayReader.copy());
     }
-    
+
     @Override
     public boolean isOrdered() {
         return true;

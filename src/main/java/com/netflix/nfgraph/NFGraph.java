@@ -83,7 +83,7 @@ import com.netflix.nfgraph.util.OrdinalMap;
  * @author dkoszewnik
  */
 public abstract class NFGraph {
-	
+
     protected final NFGraphSpec graphSpec;
     protected final NFGraphModelHolder modelHolder;
 
@@ -92,10 +92,10 @@ public abstract class NFGraph {
         this.graphSpec = graphSpec;
         this.modelHolder = new NFGraphModelHolder();
     }
-    
+
     protected NFGraph(NFGraphSpec graphSpec, NFGraphModelHolder modelHolder) {
-    	this.graphSpec = graphSpec;
-    	this.modelHolder = modelHolder;
+        this.graphSpec = graphSpec;
+        this.modelHolder = modelHolder;
     }
 
     /**
@@ -113,10 +113,10 @@ public abstract class NFGraph {
      * @return the connected ordinal, or -1 if there is no such ordinal
      */
     public int getConnection(String connectionModel, String nodeType, int ordinal, String propertyName) {
-    	int connectionModelIndex = modelHolder.getModelIndex(connectionModel);
+        int connectionModelIndex = modelHolder.getModelIndex(connectionModel);
         return getConnection(connectionModelIndex, nodeType, ordinal, propertyName);
     }
-    
+
     /**
      * Retrieve an {@link OrdinalIterator} over all connected ordinals, given the type and ordinal of the originating node, and the property by which this node is connected.
      * 
@@ -132,7 +132,7 @@ public abstract class NFGraph {
      * @return an {@link OrdinalIterator} over all connected ordinals
      */
     public OrdinalIterator getConnectionIterator(String connectionModel, String nodeType, int ordinal, String propertyName) {
-    	int connectionModelIndex = modelHolder.getModelIndex(connectionModel);
+        int connectionModelIndex = modelHolder.getModelIndex(connectionModel);
         return getConnectionIterator(connectionModelIndex, nodeType, ordinal, propertyName);
     }
 
@@ -144,17 +144,17 @@ public abstract class NFGraph {
     public OrdinalSet getConnectionSet(String nodeType, int ordinal, String propertyName) {
         return getConnectionSet(0, nodeType, ordinal, propertyName);
     }
-    
+
     /**
      * Retrieve an {@link OrdinalSet} over all connected ordinals in a given connection model, given the type and ordinal of the originating node, and the property by which this node is connected.
      * 
      * @return an {@link OrdinalSet} over all connected ordinals
      */
     public OrdinalSet getConnectionSet(String connectionModel, String nodeType, int ordinal, String propertyName) {
-    	int connectionModelIndex = modelHolder.getModelIndex(connectionModel);
+        int connectionModelIndex = modelHolder.getModelIndex(connectionModel);
         return getConnectionSet(connectionModelIndex, nodeType, ordinal, propertyName);
     }
-    
+
     protected abstract int getConnection(int connectionModelIndex, String nodeType, int ordinal, String propertyName);
 
     protected abstract OrdinalSet getConnectionSet(int connectionModelIndex, String nodeType, int ordinal, String propertyName);

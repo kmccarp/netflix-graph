@@ -31,7 +31,7 @@ public class SegmentedByteArray implements ByteData {
     public SegmentedByteArray(int log2OfSegmentSize) {
         this(new ByteSegmentPool(log2OfSegmentSize));
     }
-    
+
     public SegmentedByteArray(ByteSegmentPool memoryPool) {
         this.segments = new byte[2][];
         this.memoryPool = memoryPool;
@@ -162,7 +162,7 @@ public class SegmentedByteArray implements ByteData {
 
         long numSegmentsPopulated = length >> log2OfSegmentSize;
 
-        for(long i=numSegmentsPopulated; i <= segmentIndex; i++) {
+        for(long i = numSegmentsPopulated;i <= segmentIndex;i++) {
             segments[(int)i] = memoryPool.getSegment();
             length += 1 << log2OfSegmentSize;
         }
@@ -172,7 +172,7 @@ public class SegmentedByteArray implements ByteData {
     public long length() {
         return length;
     }
-    
+
     /**
      * Note that this is NOT thread safe.
      */

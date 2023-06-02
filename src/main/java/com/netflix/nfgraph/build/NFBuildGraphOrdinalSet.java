@@ -27,48 +27,48 @@ import com.netflix.nfgraph.OrdinalSet;
  */
 public class NFBuildGraphOrdinalSet extends OrdinalSet {
 
-	private final int ordinals[];
-	private final int size;
-	
-	public NFBuildGraphOrdinalSet(int ordinals[], int size) {
-		this.ordinals = ordinals;
-		this.size = size;
-	}
-	
-    /**
-     * {@inheritDoc}
-     */
-	@Override
-	public boolean contains(int value) {
-		for(int i=0;i<size;i++) {
-			if(ordinals[i] == value) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int[] asArray() {
-		return Arrays.copyOf(ordinals, size);
-	}
+    private final int ordinals[];
+    private final int size;
+
+    public NFBuildGraphOrdinalSet(int ordinals[], int size) {
+        this.ordinals = ordinals;
+        this.size = size;
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	public OrdinalIterator iterator() {
-		return new NFBuildGraphOrdinalIterator(ordinals, size);
-	}
+    @Override
+    public boolean contains(int value) {
+        for(int i = 0;i < size;i++) {
+            if(ordinals[i] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	public int size() {
-		return size;
-	}
+    @Override
+    public int[] asArray() {
+        return Arrays.copyOf(ordinals, size);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrdinalIterator iterator() {
+        return new NFBuildGraphOrdinalIterator(ordinals, size);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int size() {
+        return size;
+    }
 }

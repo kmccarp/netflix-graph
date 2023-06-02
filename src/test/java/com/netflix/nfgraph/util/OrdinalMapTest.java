@@ -27,37 +27,37 @@ import com.netflix.nfgraph.util.OrdinalMap;
 public class OrdinalMapTest {
 
     private OrdinalMap<String> ordinalMap;
-    
+
     @Before
     public void setUp() {
         this.ordinalMap = new OrdinalMap<String>();
     }
-    
+
     @Test
     public void assignsOrdinalsInOrder() {
-        for(int i=0; i<10; i++) {
+        for(int i = 0;i < 10;i++) {
             assertEquals(i, ordinalMap.add(String.valueOf(i)));
         }
     }
-    
+
     @Test
     public void retainsMappingFromObjectToOrdinal() {
-        for(int i=0;i<1000;i++) {
+        for(int i = 0;i < 1000;i++) {
             ordinalMap.add(String.valueOf(i));
         }
-        
-        for(int i=0;i<1000;i++) {
+
+        for(int i = 0;i < 1000;i++) {
             assertEquals(i, ordinalMap.get(String.valueOf(i)));
         }
     }
-    
+
     @Test
     public void retainsMappingFromOrdinalToObject() {
-        for(int i=0;i<1000;i++) {
+        for(int i = 0;i < 1000;i++) {
             ordinalMap.add(String.valueOf(i));
         }
-        
-        for(int i=0;i<1000;i++) {
+
+        for(int i = 0;i < 1000;i++) {
             assertEquals(String.valueOf(i), ordinalMap.get(i));
         }
     }

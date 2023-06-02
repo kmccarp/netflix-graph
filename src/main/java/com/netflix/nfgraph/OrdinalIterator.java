@@ -33,43 +33,54 @@ import com.netflix.nfgraph.compressed.HashSetOrdinalIterator;
  *
  */
 public interface OrdinalIterator {
-    
+
     /**
      * This value will be returned from <code>nextOrdinal()</code> after the iteration is completed.
      */
     public static final int NO_MORE_ORDINALS = Integer.MAX_VALUE;
-    
+
     /**
      * @return the next ordinal in this set.
      */
     public int nextOrdinal();
-    
+
     /**
      * Rewinds this <code>OrdinalIterator</code> to the beginning of the set.
      */
     public void reset();
-    
+
     /**
      * Obtain a copy of this <code>OrdinalIterator</code>.  The returned <code>OrdinalIterator</code> will be reset to the beginning of the set.
      */
     public OrdinalIterator copy();
-    
+
     /**
      * @return <code>true</code> if the ordinals returned from this set are guaranteed to be in ascending order.  Returns <code>false</code> otherwise.  
      */
     public boolean isOrdered();
-    
+
     /**
      * An iterator which always return <code>OrdinalIterator.NO_MORE_ORDINALS</code>
      */
     public static final OrdinalIterator EMPTY_ITERATOR = new OrdinalIterator() {
-        @Override public int nextOrdinal() { return NO_MORE_ORDINALS; }
+        @Override
+        public int nextOrdinal() {
+            return NO_MORE_ORDINALS;
+        }
 
-        @Override public void reset() { }
+        @Override
+        public void reset() {
+        }
 
-        @Override public OrdinalIterator copy() { return this; }
-        
-        @Override public boolean isOrdered() { return true; }
+        @Override
+        public OrdinalIterator copy() {
+            return this;
+        }
+
+        @Override
+        public boolean isOrdered() {
+            return true;
+        }
     };
 
 }

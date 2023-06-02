@@ -55,7 +55,7 @@ import com.netflix.nfgraph.exception.NFGraphException;
  * @see NFPropertySpec
  */
 public class NFGraphSpec implements Iterable<NFNodeSpec> {
-    
+
     private final Map<String, NFNodeSpec> nodeSpecs;
 
     /**
@@ -64,13 +64,13 @@ public class NFGraphSpec implements Iterable<NFNodeSpec> {
     public NFGraphSpec() {
         this.nodeSpecs = new HashMap<String, NFNodeSpec>();
     }
-    
+
     /**
      * Instantiate a graph specification with the given {@link NFNodeSpec}. 
      */
     public NFGraphSpec(NFNodeSpec... nodeTypes) {
         this();
-        
+
         for(NFNodeSpec spec : nodeTypes) {
             addNodeSpec(spec);
         }
@@ -85,26 +85,26 @@ public class NFGraphSpec implements Iterable<NFNodeSpec> {
             throw new NFGraphException("Node spec " + nodeType + " is undefined");
         return spec;
     }
-    
+
     /**
      * Add a node type to this graph specification. 
      */
     public void addNodeSpec(NFNodeSpec nodeSpec) {
         nodeSpecs.put(nodeSpec.getNodeTypeName(), nodeSpec);
     }
-    
+
     /**
      * @return the number of node types defined by this graph specification.
      */
     public int size() {
         return nodeSpecs.size();
     }
-    
+
     /**
      * @return a {@link List} containing the names of each of the node types.
      */
     public List<String> getNodeTypes() {
-    	return new ArrayList<String>(nodeSpecs.keySet());
+        return new ArrayList<String>(nodeSpecs.keySet());
     }
 
     /**
@@ -114,5 +114,5 @@ public class NFGraphSpec implements Iterable<NFNodeSpec> {
     public Iterator<NFNodeSpec> iterator() {
         return nodeSpecs.values().iterator();
     }
-    
+
 }

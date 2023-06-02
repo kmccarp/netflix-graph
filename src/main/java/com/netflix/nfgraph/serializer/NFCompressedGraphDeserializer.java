@@ -44,7 +44,7 @@ public class NFCompressedGraphDeserializer {
     public NFCompressedGraph deserialize(InputStream is) throws IOException {
         return deserialize(is, null);
     }
-    
+
     public NFCompressedGraph deserialize(InputStream is, ByteSegmentPool byteSegmentPool) throws IOException {
         DataInputStream dis = new DataInputStream(is);
 
@@ -62,12 +62,12 @@ public class NFCompressedGraphDeserializer {
         int numNodes = dis.readInt();
         NFNodeSpec nodeSpecs[] = new NFNodeSpec[numNodes];
 
-        for(int i=0;i<numNodes;i++) {
+        for(int i = 0;i < numNodes;i++) {
             String nodeTypeName = dis.readUTF();
             int numProperties = dis.readInt();
             NFPropertySpec propertySpecs[] = new NFPropertySpec[numProperties];
 
-            for(int j=0;j<numProperties;j++) {
+            for(int j = 0;j < numProperties;j++) {
                 String propertyName = dis.readUTF();
                 String toNodeType = dis.readUTF();
                 boolean isGlobal = dis.readBoolean();
@@ -87,7 +87,7 @@ public class NFCompressedGraphDeserializer {
         int numModels = dis.readInt();
         NFGraphModelHolder modelHolder = new NFGraphModelHolder();
 
-        for(int i=0;i<numModels;i++) {
+        for(int i = 0;i < numModels;i++) {
             modelHolder.getModelIndex(dis.readUTF());
         }
 

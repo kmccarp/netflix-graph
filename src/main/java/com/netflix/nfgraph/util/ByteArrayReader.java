@@ -78,14 +78,14 @@ public class ByteArrayReader {
 
         byte b = readByte();
 
-        if(b == (byte) 0x80)
+        if(b == (byte)0x80)
             return -1;
 
         int value = b & 0x7F;
-        while ((b & 0x80) != 0) {
-          b = readByte();
-          value <<= 7;
-          value |= (b & 0x7F);
+        while((b & 0x80) != 0) {
+            b = readByte();
+            value <<= 7;
+            value |= (b & 0x7F);
         }
 
         return value;
@@ -100,14 +100,14 @@ public class ByteArrayReader {
 
         byte b = readByte();
 
-        if(b == (byte) 0x80)
+        if(b == (byte)0x80)
             return -1;
 
         long value = b & 0x7F;
-        while ((b & 0x80) != 0) {
-          b = readByte();
-          value <<= 7;
-          value |= (b & 0x7F);
+        while((b & 0x80) != 0) {
+            b = readByte();
+            value <<= 7;
+            value |= (b & 0x7F);
         }
 
         return value;

@@ -34,147 +34,147 @@ import com.netflix.nfgraph.util.Mixer;
  */
 public class HashedPropertyBuilder {
 
-	private ByteArrayBuffer buf;
-	
-	public HashedPropertyBuilder(ByteArrayBuffer buf) {
-		this.buf = buf;
-	}
-	
-	public void buildProperty(OrdinalSet ordinals) {
-	    if(ordinals.size() == 0)
-	        return;
-	    
-		byte data[] = buildHashedPropertyData(ordinals);
-		buf.write(data);
-	}
-	
-	private byte[] buildHashedPropertyData(OrdinalSet ordinals) {
-		byte data[] = new byte[calculateByteArraySize(ordinals)];
-		
-		OrdinalIterator iter = ordinals.iterator();
-		
-		int ordinal = iter.nextOrdinal();
-		
-		while(ordinal != NO_MORE_ORDINALS) {
-			put(ordinal, data);
-			ordinal = iter.nextOrdinal();
-		}
-		
-		return data;
-	}
+    private ByteArrayBuffer buf;
 
-	private void put(int value, byte data[]) {
-	    value += 1;
-	    
-		int bucket = Mixer.hashInt(value) & (data.length - 1);
+    public HashedPropertyBuilder(ByteArrayBuffer buf) {
+        this.buf = buf;
+    }
 
-		if (data[bucket] != 0) {
-			bucket = nextEmptyByte(data, bucket);
-		}
+    public void buildProperty(OrdinalSet ordinals) {
+        if(ordinals.size() == 0)
+            return;
 
-		writeKey(value, bucket, data);
-	}
+        byte data[] = buildHashedPropertyData(ordinals);
+        buf.write(data);
+    }
 
-	private void writeKey(int value, int offset, byte data[]) {
-		int numBytes = calculateVIntSize(value);
+    private byte[] buildHashedPropertyData(OrdinalSet ordinals) {
+        byte data[] = new byte[calculateByteArraySize(ordinals)];
 
-		ensureSpaceIsAvailable(numBytes, offset, data);
+        OrdinalIterator iter = ordinals.iterator();
 
-		writeVInt(value, offset, data, numBytes);
-	}
+        int ordinal = iter.nextOrdinal();
 
-	private void writeVInt(int value, int offset, byte data[], int numBytes) {
-		int b = (value >>> (7 * (numBytes - 1))) & 0x7F;
-		data[offset] = (byte)b;
-		offset = nextOffset(data.length, offset);
+        while(ordinal != NO_MORE_ORDINALS) {
+            put(ordinal, data);
+            ordinal = iter.nextOrdinal();
+        }
 
-		for (int i = numBytes - 2; i >= 0; i--) {
-			b = (value >>> (7 * i)) & 0x7F;
-			data[offset] = (byte)(b | 0x80);
-			offset = nextOffset(data.length, offset);
-		}
-	}
-	
-	private int nextOffset(int length, int offset) {
-		offset++;
-		if (offset == length)
-			offset = 0;
-		return offset;
-	}
+        return data;
+    }
 
-	private int previousOffset(int length, int offset) {
-		offset--;
-		if (offset == -1)
-			offset = length - 1;
-		return offset;
-	}
-	
-	private void ensureSpaceIsAvailable(int requiredSpace, int offset, byte data[]) {
-		int copySpaces = 0;
-		int foundSpace = 1;
-		int currentOffset = offset;
+    private void put(int value, byte data[]) {
+        value += 1;
 
-		while (foundSpace < requiredSpace) {
-			currentOffset = nextOffset(data.length, currentOffset);
-			if (data[currentOffset] == 0) {
-				foundSpace++;
-			} else {
-				copySpaces++;
-			}
-		}
+        int bucket = Mixer.hashInt(value) & (data.length - 1);
 
-		int moveToOffset = currentOffset;
-		currentOffset = previousOffset(data.length, currentOffset);
+        if(data[bucket] != 0) {
+            bucket = nextEmptyByte(data, bucket);
+        }
 
-		while (copySpaces > 0) {
-			if (data[currentOffset] != 0) {
-				data[moveToOffset] = data[currentOffset];
-				copySpaces--;
-				moveToOffset = previousOffset(data.length, moveToOffset);
-			}
-			currentOffset = previousOffset(data.length, currentOffset);
-		}
-	}
-	
-	private int nextEmptyByte(byte data[], int offset) {
-		while (data[offset] != 0) {
-			offset = nextOffset(data.length, offset);
-		}
-		return offset;
-	}
+        writeKey(value, bucket, data);
+    }
 
-	private int calculateByteArraySize(OrdinalSet ordinals) {
-		int numPopulatedBytes = calculateNumPopulatedBytes(ordinals.iterator());
+    private void writeKey(int value, int offset, byte data[]) {
+        int numBytes = calculateVIntSize(value);
 
-		return calculateByteArraySizeAfterLoadFactor(numPopulatedBytes);
-	}
+        ensureSpaceIsAvailable(numBytes, offset, data);
 
-	private int calculateNumPopulatedBytes(OrdinalIterator ordinalIterator) {
-		int totalSize = 0;
-		int ordinal = ordinalIterator.nextOrdinal();
+        writeVInt(value, offset, data, numBytes);
+    }
 
-		while(ordinal != NO_MORE_ORDINALS) {
-			totalSize += calculateVIntSize(ordinal + 1);
-			ordinal = ordinalIterator.nextOrdinal();
-		}
+    private void writeVInt(int value, int offset, byte data[], int numBytes) {
+        int b = (value >>> (7 * (numBytes - 1))) & 0x7F;
+        data[offset] = (byte)b;
+        offset = nextOffset(data.length, offset);
 
-		return totalSize;
-	}
-	
-	private int calculateVIntSize(int value) {
-		int numBitsSet = numBitsUsed(value);
-		return ((numBitsSet - 1) / 7) + 1;
-	}
+        for(int i = numBytes - 2;i >= 0;i--) {
+            b = (value >>> (7 * i)) & 0x7F;
+            data[offset] = (byte)(b | 0x80);
+            offset = nextOffset(data.length, offset);
+        }
+    }
 
-	private int calculateByteArraySizeAfterLoadFactor(int numPopulatedBytes) {
-		int desiredSizeAfterLoadFactor = (numPopulatedBytes * 4) / 3;
+    private int nextOffset(int length, int offset) {
+        offset++;
+        if(offset == length)
+            offset = 0;
+        return offset;
+    }
 
-		int nextPowerOfTwo = 1 << numBitsUsed(desiredSizeAfterLoadFactor);
-		return nextPowerOfTwo;
-	}
+    private int previousOffset(int length, int offset) {
+        offset--;
+        if(offset == -1)
+            offset = length - 1;
+        return offset;
+    }
 
-	private int numBitsUsed(int value) {
-		return 32 - Integer.numberOfLeadingZeros(value);
-	}
+    private void ensureSpaceIsAvailable(int requiredSpace, int offset, byte data[]) {
+        int copySpaces = 0;
+        int foundSpace = 1;
+        int currentOffset = offset;
+
+        while(foundSpace < requiredSpace) {
+            currentOffset = nextOffset(data.length, currentOffset);
+            if(data[currentOffset] == 0) {
+                foundSpace++;
+            } else {
+                copySpaces++;
+            }
+        }
+
+        int moveToOffset = currentOffset;
+        currentOffset = previousOffset(data.length, currentOffset);
+
+        while(copySpaces > 0) {
+            if(data[currentOffset] != 0) {
+                data[moveToOffset] = data[currentOffset];
+                copySpaces--;
+                moveToOffset = previousOffset(data.length, moveToOffset);
+            }
+            currentOffset = previousOffset(data.length, currentOffset);
+        }
+    }
+
+    private int nextEmptyByte(byte data[], int offset) {
+        while(data[offset] != 0) {
+            offset = nextOffset(data.length, offset);
+        }
+        return offset;
+    }
+
+    private int calculateByteArraySize(OrdinalSet ordinals) {
+        int numPopulatedBytes = calculateNumPopulatedBytes(ordinals.iterator());
+
+        return calculateByteArraySizeAfterLoadFactor(numPopulatedBytes);
+    }
+
+    private int calculateNumPopulatedBytes(OrdinalIterator ordinalIterator) {
+        int totalSize = 0;
+        int ordinal = ordinalIterator.nextOrdinal();
+
+        while(ordinal != NO_MORE_ORDINALS) {
+            totalSize += calculateVIntSize(ordinal + 1);
+            ordinal = ordinalIterator.nextOrdinal();
+        }
+
+        return totalSize;
+    }
+
+    private int calculateVIntSize(int value) {
+        int numBitsSet = numBitsUsed(value);
+        return ((numBitsSet - 1) / 7) + 1;
+    }
+
+    private int calculateByteArraySizeAfterLoadFactor(int numPopulatedBytes) {
+        int desiredSizeAfterLoadFactor = (numPopulatedBytes * 4) / 3;
+
+        int nextPowerOfTwo = 1 << numBitsUsed(desiredSizeAfterLoadFactor);
+        return nextPowerOfTwo;
+    }
+
+    private int numBitsUsed(int value) {
+        return 32 - Integer.numberOfLeadingZeros(value);
+    }
 
 }

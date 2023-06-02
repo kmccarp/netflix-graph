@@ -32,22 +32,22 @@ import com.netflix.nfgraph.util.ByteArrayBuffer;
  */
 public class CompactPropertyBuilder {
 
-	private final ByteArrayBuffer buf;
-	
-	public CompactPropertyBuilder(ByteArrayBuffer buf) {
-		this.buf = buf;
-	}
-	
-	public void buildProperty(OrdinalSet ordinalSet) {
-		int connectedOrdinals[] = ordinalSet.asArray();
-		Arrays.sort(connectedOrdinals);
-		
-		int previousOrdinal = 0;
-		
-		for(int i=0;i<connectedOrdinals.length;i++) {
-			buf.writeVInt(connectedOrdinals[i] - previousOrdinal);
-			previousOrdinal = connectedOrdinals[i];
-		}
-	}
-	
+    private final ByteArrayBuffer buf;
+
+    public CompactPropertyBuilder(ByteArrayBuffer buf) {
+        this.buf = buf;
+    }
+
+    public void buildProperty(OrdinalSet ordinalSet) {
+        int connectedOrdinals[] = ordinalSet.asArray();
+        Arrays.sort(connectedOrdinals);
+
+        int previousOrdinal = 0;
+
+        for(int i = 0;i < connectedOrdinals.length;i++) {
+            buf.writeVInt(connectedOrdinals[i] - previousOrdinal);
+            previousOrdinal = connectedOrdinals[i];
+        }
+    }
+
 }

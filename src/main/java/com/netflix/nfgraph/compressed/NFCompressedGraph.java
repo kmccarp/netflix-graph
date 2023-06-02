@@ -86,7 +86,7 @@ public class NFCompressedGraph extends NFGraph {
         if(reader != null) {
             NFPropertySpec propertySpec = pointReaderAtProperty(reader, nodeType, propertyName, connectionModelIndex);
 
-            if (propertySpec != null) {
+            if(propertySpec != null) {
                 return set(nodeType, reader, propertySpec);
             }
         }
@@ -101,7 +101,7 @@ public class NFCompressedGraph extends NFGraph {
         if(reader != null) {
             NFPropertySpec propertySpec = pointReaderAtProperty(reader, nodeType, propertyName, connectionModelIndex);
 
-            if (propertySpec != null) {
+            if(propertySpec != null) {
                 return iterator(nodeType, reader, propertySpec);
             }
         }
@@ -176,8 +176,8 @@ public class NFCompressedGraph extends NFGraph {
     private NFPropertySpec pointReaderAtProperty(ByteArrayReader reader, String nodeType, String propertyName, int connectionModelIndex) {
         NFNodeSpec nodeSpec = graphSpec.getNodeSpec(nodeType);
 
-        for (NFPropertySpec propertySpec : nodeSpec.getPropertySpecs()) {
-            if (propertySpec.getName().equals(propertyName)) {
+        for(NFPropertySpec propertySpec : nodeSpec.getPropertySpecs()) {
+            if(propertySpec.getName().equals(propertyName)) {
                 if(propertySpec.isConnectionModelSpecific())
                     positionForModel(reader, connectionModelIndex, propertySpec);
                 return propertySpec;
@@ -192,7 +192,7 @@ public class NFCompressedGraph extends NFGraph {
     private void positionForModel(ByteArrayReader reader, int connectionModelIndex, NFPropertySpec propertySpec) {
         reader.setRemainingBytes(reader.readVInt());
 
-        for(int i=0;i<connectionModelIndex;i++) {
+        for(int i = 0;i < connectionModelIndex;i++) {
             skipSingleProperty(reader, propertySpec);
         }
     }
@@ -240,7 +240,7 @@ public class NFCompressedGraph extends NFGraph {
     public static NFCompressedGraph readFrom(InputStream is) throws IOException {
         return readFrom(is, null);
     }
-    
+
     /**
      * When using a {@link ByteSegmentPool}, this method will borrow arrays used to construct the NFCompressedGraph from that pool.
      * <p>
@@ -252,7 +252,7 @@ public class NFCompressedGraph extends NFGraph {
         NFCompressedGraphDeserializer deserializer = new NFCompressedGraphDeserializer();
         return deserializer.deserialize(is, memoryPool);
     }
-    
+
     /**
      * When using a {@link ByteSegmentPool}, this method will return all borrowed arrays back to that pool.
      * <p>
@@ -262,7 +262,7 @@ public class NFCompressedGraph extends NFGraph {
      */
     public void destroy() {
         if(data instanceof SegmentedByteArray)
-            ((SegmentedByteArray) data).destroy();
+            ((SegmentedByteArray)data).destroy();
     }
 
 }

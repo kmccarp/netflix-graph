@@ -34,7 +34,7 @@ public class NFCompressedGraphPointersSerializerTest {
     @Test
     public void dataLengthLessthan4GBUsesIntegerPointers() throws IOException {
         NFCompressedGraphLongPointers pointers = new NFCompressedGraphLongPointers();
-        pointers.addPointers("test", new long[] { 1, 2, 3 });
+        pointers.addPointers("test", new long[]{1, 2, 3});
 
         NFCompressedGraphPointersSerializer serializer = new NFCompressedGraphPointersSerializer(pointers, (long)Integer.MAX_VALUE * 2);
 
@@ -53,7 +53,7 @@ public class NFCompressedGraphPointersSerializerTest {
     @Test
     public void dataLengthGreaterThan4GBUsesLongPointers() throws IOException {
         NFCompressedGraphLongPointers pointers = new NFCompressedGraphLongPointers();
-        pointers.addPointers("test", new long[] { 1, 2, 3 });
+        pointers.addPointers("test", new long[]{1, 2, 3});
 
         NFCompressedGraphPointersSerializer serializer = new NFCompressedGraphPointersSerializer(pointers, (long)Integer.MAX_VALUE * 3);
 
@@ -68,54 +68,54 @@ public class NFCompressedGraphPointersSerializerTest {
 
         Assert.assertTrue(deserialized instanceof NFCompressedGraphLongPointers);
     }
-    
+
     @Test
     public void pointersMightStartGreaterThan2GB() throws IOException {
         NFCompressedGraphLongPointers pointers = new NFCompressedGraphLongPointers();
-        
+
         long bigStartVal = Integer.MAX_VALUE;
         bigStartVal += 5;
-        
-        long[] ptrs = new long[] { bigStartVal, bigStartVal + 10, bigStartVal + 20, bigStartVal + 100 };
+
+        long[] ptrs = new long[]{bigStartVal, bigStartVal + 10, bigStartVal + 20, bigStartVal + 100};
         pointers.addPointers("Test", ptrs);
-        
+
         NFCompressedGraphPointersSerializer serializer = new NFCompressedGraphPointersSerializer(pointers, bigStartVal + 125);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         serializer.serializePointers(new DataOutputStream(baos));
-        
+
         NFCompressedGraphPointersDeserializer deserializer = new NFCompressedGraphPointersDeserializer();
         NFCompressedGraphPointers deserialized = deserializer.deserializePointers(new DataInputStream(new ByteArrayInputStream(baos.toByteArray())));
-        
-        for(int i=0;i<ptrs.length;i++) {
+
+        for(int i = 0;i < ptrs.length;i++) {
             Assert.assertEquals(ptrs[i], deserialized.getPointer("Test", i));
         }
-        
+
         Assert.assertTrue(deserialized instanceof NFCompressedGraphIntPointers);
     }
-    
+
     @Test
     public void pointersMightStartGreaterThan4GB() throws IOException {
         NFCompressedGraphLongPointers pointers = new NFCompressedGraphLongPointers();
-        
+
         long bigStartVal = Integer.MAX_VALUE;
         bigStartVal *= 5;
-        
-        long[] ptrs = new long[] { bigStartVal, bigStartVal + 10, bigStartVal + 20, bigStartVal + 100 };
+
+        long[] ptrs = new long[]{bigStartVal, bigStartVal + 10, bigStartVal + 20, bigStartVal + 100};
         pointers.addPointers("Test", ptrs);
-        
+
         NFCompressedGraphPointersSerializer serializer = new NFCompressedGraphPointersSerializer(pointers, bigStartVal + 125);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         serializer.serializePointers(new DataOutputStream(baos));
-        
+
         NFCompressedGraphPointersDeserializer deserializer = new NFCompressedGraphPointersDeserializer();
         NFCompressedGraphPointers deserialized = deserializer.deserializePointers(new DataInputStream(new ByteArrayInputStream(baos.toByteArray())));
-        
-        for(int i=0;i<ptrs.length;i++) {
+
+        for(int i = 0;i < ptrs.length;i++) {
             Assert.assertEquals(ptrs[i], deserialized.getPointer("Test", i));
         }
-        
+
         Assert.assertTrue(deserialized instanceof NFCompressedGraphLongPointers);
     }
-    
+
 
 }
