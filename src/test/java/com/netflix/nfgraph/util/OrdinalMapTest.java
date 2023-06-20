@@ -30,7 +30,7 @@ public class OrdinalMapTest {
     
     @Before
     public void setUp() {
-        this.ordinalMap = new OrdinalMap<String>();
+        this.ordinalMap = new OrdinalMap<>();
     }
     
     @Test
