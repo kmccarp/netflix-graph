@@ -33,8 +33,9 @@ public class SingleOrdinalIterator implements OrdinalIterator {
     
     @Override
     public int nextOrdinal() {
-        if(returned)
+        if(returned) {
             return NO_MORE_ORDINALS;
+        }
         
         returned = true;
         return ordinal;

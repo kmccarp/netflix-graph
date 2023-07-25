@@ -79,7 +79,7 @@ public class NFCompressedGraphBuilder {
 
     private void addNodeType(String nodeType, NFBuildGraphNodeList nodes) {
         NFNodeSpec nodeSpec = graphSpec.getNodeSpec(nodeType);
-        long ordinalPointers[] = new long[nodes.size()];
+        long[] ordinalPointers = new long[nodes.size()];
 
         for(int i=0;i<nodes.size();i++) {
             NFBuildGraphNode node = nodes.get(i);

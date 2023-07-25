@@ -21,7 +21,7 @@ import java.io.OutputStream;
 
 public class SimpleByteArray implements ByteData {
 
-    private final byte data[];
+    private final byte[] data;
 
     public SimpleByteArray(int length) {
         this.data = new byte[length];

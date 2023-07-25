@@ -40,19 +40,17 @@ public class ByteSegmentPool {
     }
     
     public byte[] getSegment() {
-        if(pooledSegments.isEmpty())
+        if(pooledSegments.isEmpty()) {
             return new byte[1 << log2OfSegmentSize];
-        try {
-            byte[] segment = pooledSegments.removeFirst();
-            Arrays.fill(segment, (byte)0);
-            return segment;
-        } catch(NullPointerException ex) {
-            throw ex;
         }
+        byte[] segment = pooledSegments.removeFirst();
+        Arrays.fill(segment, (byte)0);
+        return segment;
     }
     
     public void returnSegment(byte[] segment) {
-        if(segment != null)
+        if(segment != null) {
             pooledSegments.addLast(segment);
+        }
     }
 }
