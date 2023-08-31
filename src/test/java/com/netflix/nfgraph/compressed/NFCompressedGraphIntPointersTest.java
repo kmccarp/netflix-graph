@@ -25,8 +25,8 @@ public class NFCompressedGraphIntPointersTest {
     public void test() {
         NFCompressedGraphIntPointers pointers = new NFCompressedGraphIntPointers();
 
-        long ptr0 = ((long)Integer.MAX_VALUE + 1000);
-        long ptr1 = ((long)Integer.MAX_VALUE * 2);
+        long ptr0 = (long)Integer.MAX_VALUE + 1000;
+        long ptr1 = (long)Integer.MAX_VALUE * 2;
 
         pointers.addPointers("test", new int[] { (int)ptr0, (int)ptr1 });
 

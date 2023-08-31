@@ -67,12 +67,14 @@ public class NFCompressedGraph extends NFGraph {
             NFPropertySpec propertySpec = pointReaderAtProperty(reader, nodeType, propertyName, connectionModelIndex);
 
             if(propertySpec != null) {
-                if(propertySpec.isSingle())
+                if(propertySpec.isSingle()) {
                     return reader.readVInt();
+                }
 
                 int firstOrdinal = iterator(nodeType, reader, propertySpec).nextOrdinal();
-                if(firstOrdinal != OrdinalIterator.NO_MORE_ORDINALS)
+                if(firstOrdinal != OrdinalIterator.NO_MORE_ORDINALS) {
                     return firstOrdinal;
+                }
             }
         }
 
@@ -114,8 +116,9 @@ public class NFCompressedGraph extends NFGraph {
     }
 
     private OrdinalSet set(String nodeType, ByteArrayReader reader, NFPropertySpec propertySpec) {
-        if(propertySpec.isSingle())
+        if(propertySpec.isSingle()) {
             return new SingleOrdinalSet(reader.readVInt());
+        }
 
         int size = reader.readVInt();
 
@@ -126,8 +129,9 @@ public class NFCompressedGraph extends NFGraph {
             return new BitSetOrdinalSet(reader);
         }
 
-        if(size == 0)
+        if(size == 0) {
             return EMPTY_SET;
+        }
 
         if(propertySpec.isHashed()) {
             reader.setRemainingBytes(1 << (size - 1));
@@ -139,8 +143,9 @@ public class NFCompressedGraph extends NFGraph {
     }
 
     private OrdinalIterator iterator(String nodeType, ByteArrayReader reader, NFPropertySpec propertySpec) {
-        if(propertySpec.isSingle())
+        if(propertySpec.isSingle()) {
             return new SingleOrdinalIterator(reader.readVInt());
+        }
 
         int size = reader.readVInt();
 
@@ -151,8 +156,9 @@ public class NFCompressedGraph extends NFGraph {
             return new BitSetOrdinalIterator(reader);
         }
 
-        if(size == 0)
+        if(size == 0) {
             return EMPTY_ITERATOR;
+        }
 
         if(propertySpec.isHashed()) {
             reader.setRemainingBytes(1 << (size - 1));
@@ -166,8 +172,9 @@ public class NFCompressedGraph extends NFGraph {
     private ByteArrayReader reader(String nodeType, int ordinal) {
         long pointer = pointers.getPointer(nodeType, ordinal);
 
-        if(pointer == -1)
+        if(pointer == -1) {
             return null;
+        }
 
         return new ByteArrayReader(data, pointer);
     }
@@ -178,8 +185,9 @@ public class NFCompressedGraph extends NFGraph {
 
         for (NFPropertySpec propertySpec : nodeSpec.getPropertySpecs()) {
             if (propertySpec.getName().equals(propertyName)) {
-                if(propertySpec.isConnectionModelSpecific())
+                if(propertySpec.isConnectionModelSpecific()) {
                     positionForModel(reader, connectionModelIndex, propertySpec);
+                }
                 return propertySpec;
             } else {
                 skipProperty(reader, propertySpec);
@@ -214,8 +222,9 @@ public class NFCompressedGraph extends NFGraph {
 
         int size = reader.readVInt();
 
-        if(size == 0)
+        if(size == 0) {
             return;
+        }
 
         if(size == -1) {
             int numBits = pointers.numPointers(propertySpec.getToNodeType());
@@ -261,8 +270,9 @@ public class NFCompressedGraph extends NFGraph {
      * is accessing this memory pool at any given time.
      */
     public void destroy() {
-        if(data instanceof SegmentedByteArray)
-            ((SegmentedByteArray) data).destroy();
+        if(data instanceof SegmentedByteArray) {
+            ((SegmentedByteArray)data).destroy();
+        }
     }
 
 }

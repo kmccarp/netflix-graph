@@ -30,7 +30,7 @@ import com.netflix.nfgraph.util.ByteData;
 
 public class VIntTest {
 
-    private int randomValues[];
+    private int[] randomValues;
     private ByteData data;
     private long seed;
 

@@ -26,24 +26,25 @@ import com.netflix.nfgraph.OrdinalIterator;
  */
 public class NFBuildGraphOrdinalIterator implements OrdinalIterator {
     
-    private final int ordinals[];
+    private final int[] ordinals;
     
     private int currentPositionInList;
     private int previousOrdinal = Integer.MIN_VALUE;
     
-    NFBuildGraphOrdinalIterator(int ordinals[], int size) {
+    NFBuildGraphOrdinalIterator(int[] ordinals, int size) {
     	this.ordinals = Arrays.copyOfRange(ordinals, 0, size);
     	Arrays.sort(this.ordinals);
     }
     
-    private NFBuildGraphOrdinalIterator(int ordinals[]) {
+    private NFBuildGraphOrdinalIterator(int[] ordinals) {
     	this.ordinals = ordinals;
     }
     
     @Override
     public int nextOrdinal() {
-        if(previousOrdinal == NO_MORE_ORDINALS)
+        if(previousOrdinal == NO_MORE_ORDINALS) {
             return NO_MORE_ORDINALS;
+        }
         
         int nextOrdinal = nextOrdinalInList();
         while(nextOrdinal == previousOrdinal) {
@@ -71,8 +72,9 @@ public class NFBuildGraphOrdinalIterator implements OrdinalIterator {
     }
 
     private int nextOrdinalInList() {
-        if(currentPositionInList == ordinals.length)
+        if(currentPositionInList == ordinals.length) {
             return NO_MORE_ORDINALS;
+        }
         return ordinals[currentPositionInList++];
     }
     
