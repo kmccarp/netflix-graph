@@ -46,7 +46,7 @@ public class BitSetPropertyBuilder {
 
 	private byte[] buildBitSetData(int numBits, OrdinalIterator iter) {
 		int numBytes = ((numBits - 1) / 8) + 1;
-        byte data[] = new byte[numBytes];
+        byte[] data = new byte[numBytes];
 		
 		int ordinal = iter.nextOrdinal();
 		

@@ -31,7 +31,7 @@ public class NFBuildGraphNodeCache {
     private final Map<String,NFBuildGraphNodeList> nodesByOrdinal;
 
     NFBuildGraphNodeCache(NFGraphSpec graphSpec, NFGraphModelHolder modelHolder) {
-        this.nodesByOrdinal = new HashMap<String, NFBuildGraphNodeList>();
+        this.nodesByOrdinal = new HashMap<>();
         this.graphSpec = graphSpec;
         this.buildGraphModelHolder = modelHolder;
     }
