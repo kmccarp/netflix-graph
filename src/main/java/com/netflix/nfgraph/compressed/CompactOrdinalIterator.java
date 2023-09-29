@@ -28,7 +28,7 @@ import com.netflix.nfgraph.util.ByteArrayReader;
 public class CompactOrdinalIterator implements OrdinalIterator {
 
     private final ByteArrayReader arrayReader;
-    private int currentOrdinal = 0;
+    private int currentOrdinal;
 
     CompactOrdinalIterator(ByteArrayReader arrayReader) {
         this.arrayReader = arrayReader;
@@ -37,8 +37,9 @@ public class CompactOrdinalIterator implements OrdinalIterator {
     @Override
     public int nextOrdinal() {
         int delta = arrayReader.readVInt();
-        if(delta == -1)
+        if (delta == -1) {
             return NO_MORE_ORDINALS;
+        }
         currentOrdinal += delta;
         return currentOrdinal;
     }

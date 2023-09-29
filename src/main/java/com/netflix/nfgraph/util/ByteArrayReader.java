@@ -73,19 +73,21 @@ public class ByteArrayReader {
      * @return a variable-byte integer at the current offset.  The offset is incremented by the size of the returned integer.
      */
     public int readVInt() {
-        if(pointer >= endByte)
+        if (pointer >= endByte) {
             return -1;
+        }
 
         byte b = readByte();
 
-        if(b == (byte) 0x80)
+        if (b == (byte) 0x80) {
             return -1;
+        }
 
         int value = b & 0x7F;
         while ((b & 0x80) != 0) {
           b = readByte();
           value <<= 7;
-          value |= (b & 0x7F);
+          value |= b & 0x7F;
         }
 
         return value;
@@ -95,19 +97,21 @@ public class ByteArrayReader {
      * @return a variable-byte long at the current offset.  The offset is incremented by the size of the returned long.
      */
     public long readVLong() {
-        if(pointer >= endByte)
+        if (pointer >= endByte) {
             return -1;
+        }
 
         byte b = readByte();
 
-        if(b == (byte) 0x80)
+        if (b == (byte) 0x80) {
             return -1;
+        }
 
         long value = b & 0x7F;
         while ((b & 0x80) != 0) {
           b = readByte();
           value <<= 7;
-          value |= (b & 0x7F);
+          value |= b & 0x7F;
         }
 
         return value;

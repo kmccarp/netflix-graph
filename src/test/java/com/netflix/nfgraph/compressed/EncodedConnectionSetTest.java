@@ -67,16 +67,17 @@ public abstract class EncodedConnectionSetTest {
     }
 
     private OrdinalSet generateExpectedOrdinals(int totalOrdinals) {
-        expectedOrdinals = new HashSet<Integer>();
+        expectedOrdinals = new HashSet<>();
 
         int numOrdinalsInSet = rand.nextInt(totalOrdinals);
 
-        int ordinals[] = new int[numOrdinalsInSet];
+        int[] ordinals = new int[numOrdinalsInSet];
 
         for(int i=0; i<ordinals.length; i++) {
             int ordinal = rand.nextInt(totalOrdinals);
-            while(expectedOrdinals.contains(ordinal))
+            while (expectedOrdinals.contains(ordinal)) {
                 ordinal = rand.nextInt(totalOrdinals);
+            }
             ordinals[i] = ordinal;
             expectedOrdinals.add(ordinal);
         }
@@ -105,7 +106,7 @@ public abstract class EncodedConnectionSetTest {
     public void ordinalSetContainsAll() {
         OrdinalSet ordinalSet = createOrdinalSet();
 
-        int expected[] = new int[expectedOrdinals.size()];
+        int[] expected = new int[expectedOrdinals.size()];
         int expectedIdx = 0;
 
         for(Integer expect : expectedOrdinals) {
@@ -121,7 +122,7 @@ public abstract class EncodedConnectionSetTest {
     public void ordinalSetContainsMostButNotAll() {
         OrdinalSet ordinalSet = createOrdinalSet();
 
-        int unexpected[] = new int[expectedOrdinals.size() + 1];
+        int[] unexpected = new int[expectedOrdinals.size() + 1];
         int unexpectedIdx = 0;
 
         boolean addedUnexpected = false;
@@ -159,7 +160,7 @@ public abstract class EncodedConnectionSetTest {
     public void iteratorReturnsArray() {
         OrdinalSet ordinalSet = createOrdinalSet();
 
-        int arr[] = ordinalSet.asArray();
+        int[] arr = ordinalSet.asArray();
 
         for(int ordinal : arr) {
             assertTrue("seed: " + seed, expectedOrdinals.contains(Integer.valueOf(ordinal)));
@@ -172,7 +173,7 @@ public abstract class EncodedConnectionSetTest {
     public void iteratorReturnsAllExpectedOrdinalsOnce() {
         OrdinalIterator iter = createOrdinalSet().iterator();
 
-        Set<Integer> returnedOrdinals = new HashSet<Integer>();
+        Set<Integer> returnedOrdinals = new HashSet<>();
         int counter = 0;
 
         try {
@@ -195,8 +196,9 @@ public abstract class EncodedConnectionSetTest {
 
     private int generateUnexpectedOrdinal() {
         int unexpectedOrdinal = rand.nextInt(totalOrdinals);
-        while(expectedOrdinals.contains(unexpectedOrdinal))
+        while (expectedOrdinals.contains(unexpectedOrdinal)) {
             unexpectedOrdinal = rand.nextInt(totalOrdinals);
+        }
         return unexpectedOrdinal;
     }
 

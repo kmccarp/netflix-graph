@@ -39,8 +39,9 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
      */
     @Override
     public int nextOrdinal() {
-        if(offset >>> 3 == reader.length())
+        if (offset >>> 3 == reader.length()) {
             return NO_MORE_ORDINALS;
+        }
         
         skipToNextPopulatedByte();
         
@@ -83,9 +84,10 @@ public class BitSetOrdinalIterator implements OrdinalIterator {
                 && (currentByte() >>> (offset & 0x07)) == 0) {
             offset += 0x08;
             offset &= ~0x07;
-            
-            while(moreBytesToRead() && currentByte() == 0)
+
+            while (moreBytesToRead() && currentByte() == 0) {
                 offset += 0x08;
+            }
         }
     }
 

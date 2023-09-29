@@ -54,8 +54,9 @@ public abstract class OrdinalSet {
      */
 	public boolean containsAll(int... values) {
 		for(int value : values) {
-			if(!contains(value))
-				return false;
+            if (!contains(value)) {
+                return false;
+            }
 		}
 		return true;
 	}
@@ -64,7 +65,7 @@ public abstract class OrdinalSet {
 	 * Returns an array containing all elements in the set.
 	 */
 	public int[] asArray() {
-	    int arr[] = new int[size()];
+	    int[] arr = new int[size()];
 	    OrdinalIterator iter = iterator();
 	    
 	    int ordinal = iter.nextOrdinal();
@@ -88,7 +89,7 @@ public abstract class OrdinalSet {
 	 */
 	public abstract int size();
 
-	private static final int EMPTY_ORDINAL_ARRAY[] = new int[0];
+	private static final int[] EMPTY_ORDINAL_ARRAY = new int[0];
 
 	/**
 	 * An empty <code>OrdinalSet</code>.

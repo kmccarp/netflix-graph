@@ -27,10 +27,10 @@ import com.netflix.nfgraph.OrdinalSet;
  */
 public class NFBuildGraphOrdinalSet extends OrdinalSet {
 
-	private final int ordinals[];
+	private final int[] ordinals;
 	private final int size;
 	
-	public NFBuildGraphOrdinalSet(int ordinals[], int size) {
+	public NFBuildGraphOrdinalSet(int[] ordinals, int size) {
 		this.ordinals = ordinals;
 		this.size = size;
 	}
