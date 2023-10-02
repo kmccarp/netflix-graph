@@ -33,11 +33,11 @@ import com.netflix.nfgraph.spec.NFPropertySpec;
  */
 class NFBuildGraphNodeConnections {
 
-	private static final int EMPTY_ORDINAL_ARRAY[] = new int[0];
+	private static final int[] EMPTY_ORDINAL_ARRAY = new int[0];
 	
-    private final int singleValues[];
-    private final int multipleValues[][];
-    private final int multipleValueSizes[];
+    private final int[] singleValues;
+    private final int[][] multipleValues;
+    private final int[] multipleValueSizes;
 
     NFBuildGraphNodeConnections(NFNodeSpec nodeSpec) {
     	singleValues = new int[nodeSpec.getNumSingleProperties()];
@@ -49,11 +49,13 @@ class NFBuildGraphNodeConnections {
     }
     
     int getConnection(NFPropertySpec spec) {
-    	if(spec.isSingle())
-    		return singleValues[spec.getPropertyIndex()];
+        if (spec.isSingle()) {
+            return singleValues[spec.getPropertyIndex()];
+        }
 
-    	if(multipleValues[spec.getPropertyIndex()].length > 0)
-    	    return multipleValues[spec.getPropertyIndex()].length;
+        if (multipleValues[spec.getPropertyIndex()].length > 0) {
+            return multipleValues[spec.getPropertyIndex()].length;
+        }
     	
     	return -1;
     }
@@ -82,7 +84,7 @@ class NFBuildGraphNodeConnections {
     }
 
     void addMultipleProperty(NFPropertySpec spec, int ordinal) {
-    	int values[] = multipleValues[spec.getPropertyIndex()];
+    	int[] values = multipleValues[spec.getPropertyIndex()];
     	int propSize = multipleValueSizes[spec.getPropertyIndex()];
     	
     	if(values.length == 0) {

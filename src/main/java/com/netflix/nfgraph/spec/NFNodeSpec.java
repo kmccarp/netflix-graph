@@ -30,7 +30,7 @@ import com.netflix.nfgraph.util.ArrayIterator;
 public class NFNodeSpec implements Iterable<NFPropertySpec> {
 
 	private final String nodeTypeName;
-    private final NFPropertySpec propertySpecs[];
+    private final NFPropertySpec[] propertySpecs;
     
     private final int numSingleProperties;
     private final int numMultipleProperties;
@@ -66,8 +66,9 @@ public class NFNodeSpec implements Iterable<NFPropertySpec> {
     
     public NFPropertySpec getPropertySpec(String propertyName) {
         for(NFPropertySpec spec : propertySpecs) {
-            if(spec.getName().equals(propertyName))
+            if (spec.getName().equals(propertyName)) {
                 return spec;
+            }
         }
         throw new NFGraphException("Property " + propertyName + " is undefined for node type " + nodeTypeName);
     }
@@ -82,7 +83,7 @@ public class NFNodeSpec implements Iterable<NFPropertySpec> {
 
     @Override
     public Iterator<NFPropertySpec> iterator() {
-        return new ArrayIterator<NFPropertySpec>(propertySpecs);
+        return new ArrayIterator<>(propertySpecs);
     }
     
 }

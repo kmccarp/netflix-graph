@@ -59,7 +59,7 @@ public class HashSetOrdinalSet extends OrdinalSet {
     public boolean contains(int value) {
         value += 1;
 
-        int offset = (Mixer.hashInt(value) & ((int)reader.length() - 1));
+        int offset = Mixer.hashInt(value) & ((int)reader.length() - 1);
 
         offset = seekBeginByte(offset);
 
@@ -73,8 +73,9 @@ public class HashSetOrdinalSet extends OrdinalSet {
                 offset = nextOffset(offset);
             }
 
-            if(readValue == value)
+            if (readValue == value) {
                 return true;
+            }
         }
 
         return false;
@@ -82,14 +83,16 @@ public class HashSetOrdinalSet extends OrdinalSet {
 
     @Override
     public int size() {
-        if(size == Integer.MIN_VALUE)
+        if (size == Integer.MIN_VALUE) {
             size = countHashEntries();
+        }
         return size;
     }
 
     private int seekBeginByte(int offset) {
-        while((reader.getByte(offset) & 0x80) != 0)
+        while ((reader.getByte(offset) & 0x80) != 0) {
             offset = nextOffset(offset);
+        }
         return offset;
     }
 
@@ -105,8 +108,9 @@ public class HashSetOrdinalSet extends OrdinalSet {
         int counter = 0;
         for(int i=0;i<reader.length();i++) {
             byte b = reader.getByte(i);
-            if(b != 0 && (b & 0x80) == 0)
+            if (b != 0 && (b & 0x80) == 0) {
                 counter++;
+            }
         }
         return counter;
     }

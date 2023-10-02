@@ -49,12 +49,15 @@ public class RandomizedGraphBuilder {
         graph.addConnectionModel("model-2");
         
         for(int i=0; i < numANodes;i++) {
-            if(rand.nextBoolean())
+            if (rand.nextBoolean()) {
                 graph.addConnection("node-type-a", i, "a-to-one-b-global", rand.nextInt(numBNodes));
-            if(rand.nextBoolean())
+            }
+            if (rand.nextBoolean()) {
                 graph.addConnection("model-1", "node-type-a", i, "a-to-one-b-per-model", rand.nextInt(numBNodes));
-            if(rand.nextBoolean())
+            }
+            if (rand.nextBoolean()) {
                 graph.addConnection("model-2", "node-type-a", i, "a-to-one-b-per-model", rand.nextInt(numBNodes));
+            }
         }
         
         for(int i=0; i < numBNodes;i++) {
@@ -128,11 +131,12 @@ public class RandomizedGraphBuilder {
     
     private HashSet<Integer> buildRandomConnectionSet(Random rand) {
         int numConnections = rand.nextInt(100);
-        HashSet<Integer> connections = new HashSet<Integer>();
+        HashSet<Integer> connections = new HashSet<>();
         for(int j=0;j<numConnections;j++) {
             int connectedTo = rand.nextInt(numANodes);
-            while(connections.contains(connectedTo))
+            while (connections.contains(connectedTo)) {
                 connectedTo = rand.nextInt(numANodes);
+            }
             connections.add(connectedTo);
         }
         return connections;
