@@ -48,8 +48,8 @@ import java.util.Iterator;
  */
 public class OrdinalMap<T> implements Iterable<T> {
 
-    private int hashedOrdinalArray[];
-    private T objectsByOrdinal[];
+    private int[] hashedOrdinalArray;
+    private T[] objectsByOrdinal;
     
     private int size;
     
@@ -74,11 +74,13 @@ public class OrdinalMap<T> implements Iterable<T> {
      */
     public int add(T obj) {
         int ordinal = get(obj);
-        if(ordinal != -1)
+        if (ordinal != -1) {
             return ordinal;
-        
-        if(size == objectsByOrdinal.length)
+        }
+
+        if (size == objectsByOrdinal.length) {
             growCapacity();
+        }
         
         objectsByOrdinal[size] = obj;
         hashOrdinalIntoArray(size, hashedOrdinalArray);
@@ -96,8 +98,9 @@ public class OrdinalMap<T> implements Iterable<T> {
         int ordinal = hashedOrdinalArray[bucket];
         
         while(ordinal != -1) {
-            if(objectsByOrdinal[ordinal].equals(obj))
+            if (objectsByOrdinal[ordinal].equals(obj)) {
                 return ordinal;
+            }
             
             bucket = (bucket + 1) % hashedOrdinalArray.length;
             ordinal = hashedOrdinalArray[bucket];
@@ -110,8 +113,9 @@ public class OrdinalMap<T> implements Iterable<T> {
      * @return the object for a given ordinal.  If the ordinal does not yet exist, returns null.
      */
     public T get(int ordinal) {
-        if(ordinal >= size)
+        if (ordinal >= size) {
             return null;
+        }
         return objectsByOrdinal[ordinal];
     }
     
@@ -123,7 +127,7 @@ public class OrdinalMap<T> implements Iterable<T> {
     }
     
     private void growCapacity() {
-        int newHashedOrdinalArray[] = newHashedOrdinalArray(hashedOrdinalArray.length * 2);
+        int[] newHashedOrdinalArray = newHashedOrdinalArray(hashedOrdinalArray.length * 2);
         
         for(int i=0;i<objectsByOrdinal.length;i++) {
             hashOrdinalIntoArray(i, newHashedOrdinalArray);
@@ -133,7 +137,7 @@ public class OrdinalMap<T> implements Iterable<T> {
         hashedOrdinalArray = newHashedOrdinalArray;
     }
     
-    private void hashOrdinalIntoArray(int ordinal, int hashedOrdinalArray[]) {
+    private void hashOrdinalIntoArray(int ordinal, int[] hashedOrdinalArray) {
         int hash = Mixer.hashInt(objectsByOrdinal[ordinal].hashCode());
         
         int bucket = hash % hashedOrdinalArray.length;
@@ -146,7 +150,7 @@ public class OrdinalMap<T> implements Iterable<T> {
     }
     
     private int[] newHashedOrdinalArray(int length) {
-        int arr[] = new int[length];
+        int[] arr = new int[length];
         Arrays.fill(arr, -1);
         return arr;
     }
@@ -156,7 +160,7 @@ public class OrdinalMap<T> implements Iterable<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator<T>(objectsByOrdinal, size);
+        return new ArrayIterator<>(objectsByOrdinal, size);
     }
     
 }

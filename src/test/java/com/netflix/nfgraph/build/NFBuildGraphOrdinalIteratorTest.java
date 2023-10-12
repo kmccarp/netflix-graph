@@ -28,8 +28,9 @@ public class NFBuildGraphOrdinalIteratorTest {
     
     @Test
     public void canBeReset() {
-        for(int i=0;i<10;i++)
+        for (int i = 0; i < 10; i++) {
             iter.nextOrdinal();
+        }
         
         iter.reset();
         

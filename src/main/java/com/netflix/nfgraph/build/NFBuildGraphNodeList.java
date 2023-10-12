@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author ishastri
  */
 public class NFBuildGraphNodeList {
-    private ArrayList<NFBuildGraphNode> list;
+    private final ArrayList<NFBuildGraphNode> list;
 
     NFBuildGraphNodeList() {
         list = new ArrayList<>();
