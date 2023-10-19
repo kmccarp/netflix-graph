@@ -57,8 +57,8 @@ public class NFCompressedGraphPointersDeserializer {
         int numNodes = dis.readInt();
         int numBytes = dis.readInt();
 
-        byte data[] = new byte[numBytes];
-        long pointers[] = new long[numNodes];
+        byte[] data = new byte[numBytes];
+        long[] pointers = new long[numNodes];
 
         dis.readFully(data);
 
@@ -94,8 +94,8 @@ public class NFCompressedGraphPointersDeserializer {
         int numNodes = dis.readInt();
         int numBytes = dis.readInt();
 
-        byte data[] = new byte[numBytes];
-        int pointers[] = new int[numNodes];
+        byte[] data = new byte[numBytes];
+        int[] pointers = new int[numNodes];
 
         dis.readFully(data);
 

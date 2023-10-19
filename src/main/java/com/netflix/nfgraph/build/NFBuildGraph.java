@@ -141,8 +141,7 @@ public class NFBuildGraph extends NFGraph {
      */
     public NFPropertySpec getPropertySpec(String nodeType, String propertyName) {
         NFNodeSpec nodeSpec = graphSpec.getNodeSpec(nodeType);
-        NFPropertySpec propertySpec = nodeSpec.getPropertySpec(propertyName);
-        return propertySpec;
+        return nodeSpec.getPropertySpec(propertyName);
     }
 
     /**

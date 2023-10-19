@@ -62,7 +62,7 @@ public class NFGraphSpec implements Iterable<NFNodeSpec> {
      * Instantiate a graph specification with no {@link NFNodeSpec}s.
      */
     public NFGraphSpec() {
-        this.nodeSpecs = new HashMap<String, NFNodeSpec>();
+        this.nodeSpecs = new HashMap<>();
     }
     
     /**
@@ -81,8 +81,9 @@ public class NFGraphSpec implements Iterable<NFNodeSpec> {
      */
     public NFNodeSpec getNodeSpec(String nodeType) {
         NFNodeSpec spec = nodeSpecs.get(nodeType);
-        if(spec == null)
+        if(spec == null) {
             throw new NFGraphException("Node spec " + nodeType + " is undefined");
+        }
         return spec;
     }
     
@@ -104,7 +105,7 @@ public class NFGraphSpec implements Iterable<NFNodeSpec> {
      * @return a {@link List} containing the names of each of the node types.
      */
     public List<String> getNodeTypes() {
-    	return new ArrayList<String>(nodeSpecs.keySet());
+    	return new ArrayList<>(nodeSpecs.keySet());
     }
 
     /**

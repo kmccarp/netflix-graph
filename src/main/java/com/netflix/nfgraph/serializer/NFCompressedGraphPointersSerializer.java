@@ -35,8 +35,9 @@ public class NFCompressedGraphPointersSerializer {
 
     void serializePointers(DataOutputStream dos) throws IOException {
         int numNodeTypes = pointers.asMap().size();
-        if(dataLength > 0xFFFFFFFFL)
+        if(dataLength > 0xFFFFFFFFL) {
             numNodeTypes |= Integer.MIN_VALUE;
+        }
 
         /// In order to maintain backwards compatibility of produced artifacts,
         /// if more than 32 bits is required to represent the pointers, then flag
@@ -49,7 +50,7 @@ public class NFCompressedGraphPointersSerializer {
         }
     }
 
-    private void serializePointerArray(DataOutputStream dos, long pointers[]) throws IOException {
+    private void serializePointerArray(DataOutputStream dos, long[] pointers) throws IOException {
         ByteArrayBuffer buf = new ByteArrayBuffer();
 
         long currentPointer = 0;
